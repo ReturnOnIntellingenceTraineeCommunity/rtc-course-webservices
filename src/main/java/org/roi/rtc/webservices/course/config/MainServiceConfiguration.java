@@ -23,5 +23,4 @@ public class MainServiceConfiguration extends Configuration {
     public void setMessages(MessagesConfiguration messages) {
         this.messages = messages;
     }
-
 }

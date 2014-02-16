@@ -1,2 +1,4 @@
 messages:
   hello: Hello world!
+http:
+  rootPath: /method/*

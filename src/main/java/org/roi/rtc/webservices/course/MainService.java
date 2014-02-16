@@ -1,6 +1,7 @@
 package org.roi.rtc.webservices.course;
 
 import com.yammer.dropwizard.Service;
+import com.yammer.dropwizard.assets.AssetsBundle;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
 import org.roi.rtc.webservices.course.config.MainServiceConfiguration;
@@ -21,6 +22,7 @@ public class MainService extends Service<MainServiceConfiguration> {
     @Override
     public void initialize(Bootstrap<MainServiceConfiguration> bootstrap) {
         bootstrap.setName("dropwizard-example");
+        bootstrap.addBundle(new AssetsBundle("/assets/", "/"));
     }
 
     @Override

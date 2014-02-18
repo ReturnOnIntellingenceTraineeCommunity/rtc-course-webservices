@@ -4,6 +4,6 @@ http:
   rootPath: /method/*
 database:
   driverClass: com.mysql.jdbc.Driver
-  user: cources
+  user: courses
   password: hLvKfxEX5sTaEUzu
-  url: jdbc:mysql://localhost/cources?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
+  url: jdbc:mysql://localhost/courses?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false

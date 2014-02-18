@@ -1,29 +1,49 @@
 package org.roi.rtc.webservices.course.resources;
 
+import com.yammer.dropwizard.hibernate.UnitOfWork;
+import com.yammer.dropwizard.jersey.params.IntParam;
+import com.yammer.metrics.annotation.Timed;
+import org.roi.rtc.webservices.course.dao.AuthorDao;
 import org.roi.rtc.webservices.course.entities.Author;
-import org.roi.rtc.webservices.course.service.AuthorService;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.util.Collection;
 
 /**
  * Created with IntelliJ IDEA.
  * User: Vlablack
  * Date: 18.02.14
- * Time: 16:12
+ * Time: 20:16
  * To change this template use File | Settings | File Templates.
  */
-@Path("/author.get")
+@Path(value = "/author")
+@Produces(MediaType.APPLICATION_JSON)
 public class AuthorResource {
-    private AuthorService service;
 
-    public AuthorResource(AuthorService service) {
-        this.service = service;
+    private final AuthorDao dao;
+
+    public AuthorResource(AuthorDao dao) {
+        this.dao = dao;
     }
 
     @GET
-    public Author findPerson(@PathParam("id") Integer id) {
-        return service.findById(id);
+    @Timed
+    @UnitOfWork
+    @Path("{id}")
+    public Author findById(@PathParam("id") IntParam id) {
+        Author author = dao.findById(id.get());
+        if (author == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        return author;
+    }
+
+    @GET
+    @Timed
+    @UnitOfWork
+    public Collection<Author> findAll() {
+        return dao.findAll();
     }
 }

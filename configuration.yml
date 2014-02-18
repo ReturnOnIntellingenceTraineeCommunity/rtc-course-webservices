@@ -2,3 +2,8 @@ messages:
   hello: Hello world!
 http:
   rootPath: /method/*
+database:
+  driverClass: com.mysql.jdbc.Driver
+  user: cources
+  password: hLvKfxEX5sTaEUzu
+  url: jdbc:mysql://localhost/cources?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false

@@ -8,9 +8,13 @@ import java.util.Collection;
  * @author Vladislav Pikus
  */
 public interface AuthorDao {
-    Author saveOrUpdate(Author author);
+    Author create(Author author);
+
+    Author update(Author author);
 
     void delete(Integer id);
+
+    void deleteAll();
 
     Integer getCount();
 

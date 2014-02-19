@@ -19,8 +19,15 @@ public class AuthorDaoImpl extends AbstractDAO<Author> implements AuthorDao {
     }
 
     @Override
-    public Author saveOrUpdate(Author author) {
-        return persist(author);
+    public Author create(Author author) {
+        currentSession().save(author);
+        return author;
+    }
+
+    @Override
+    public Author update(Author author) {
+        currentSession().update(author);
+        return author;
     }
 
     @Override
@@ -46,5 +53,10 @@ public class AuthorDaoImpl extends AbstractDAO<Author> implements AuthorDao {
     @Override
     public Author findById(Integer id) {
         return (Author) currentSession().get(Author.class, id);
+    }
+
+    @Override
+    public void deleteAll() {
+        currentSession().createQuery("delete from Author");
     }
 }

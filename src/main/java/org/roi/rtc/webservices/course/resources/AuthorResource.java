@@ -11,12 +11,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 /**
- * Created with IntelliJ IDEA.
- * User: Vlablack
- * Date: 18.02.14
- * Time: 20:16
- * To change this template use File | Settings | File Templates.
+ * @author Vladislav Pikus
  */
 @Path(value = "/author")
 @Produces(MediaType.APPLICATION_JSON)
@@ -45,5 +43,32 @@ public class AuthorResource {
     @UnitOfWork
     public Collection<Author> findAll() {
         return dao.findAll();
+    }
+
+    @POST
+    @UnitOfWork
+    public Author create(Author author) {
+        return dao.create(author);
+    }
+
+    @PUT
+    @UnitOfWork
+    @Path("{id}")
+    public Author update(@PathParam("id") IntParam id, Author author) {
+        checkArgument(id.equals(author.getId()));
+        return dao.update(author);
+    }
+
+    @DELETE
+    @UnitOfWork
+    @Path("{id}")
+    public void delete(@PathParam("id") IntParam id) {
+        dao.delete(id.get());
+    }
+
+    @DELETE
+    @UnitOfWork
+    public void deleteAll() {
+        dao.deleteAll();
     }
 }

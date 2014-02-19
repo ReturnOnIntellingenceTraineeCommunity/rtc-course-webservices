@@ -40,11 +40,11 @@ public class Author {
         return lastName;
     }
 
-    @Column(length = 50)
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    @Column(length = 50)
     public String getEmail() {
         return email;
     }
@@ -67,8 +67,7 @@ public class Author {
 
     }
 
-    public Author(Integer id, String firstName, String lastName, String email) {
-        this.id = id;
+    public Author(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

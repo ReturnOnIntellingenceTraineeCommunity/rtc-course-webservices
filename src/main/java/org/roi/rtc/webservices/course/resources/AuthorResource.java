@@ -55,7 +55,7 @@ public class AuthorResource {
     @UnitOfWork
     @Path("{id}")
     public Author update(@PathParam("id") IntParam id, Author author) {
-        checkArgument(id.equals(author.getId()));
+        checkArgument(id.get().equals(author.getId()));
         return dao.update(author);
     }
 

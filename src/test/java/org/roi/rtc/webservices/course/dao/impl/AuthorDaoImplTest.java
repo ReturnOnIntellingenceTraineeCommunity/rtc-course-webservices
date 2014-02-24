@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.roi.rtc.webservices.course.dao.AuthorDao;
 import org.skife.jdbi.v2.DBI;
 
+import java.util.UUID;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Vlablack

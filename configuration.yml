@@ -9,3 +9,5 @@ database:
   user: courses
   password: hLvKfxEX5sTaEUzu
   url: jdbc:mysql://localhost/courses?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
+  properties:
+    hibernate.hbm2ddl.auto: create

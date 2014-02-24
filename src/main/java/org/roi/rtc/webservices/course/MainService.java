@@ -11,6 +11,7 @@ import org.roi.rtc.webservices.course.dao.AuthorDao;
 import org.roi.rtc.webservices.course.dao.impl.AuthorDaoImpl;
 import org.roi.rtc.webservices.course.entities.Author;
 import org.roi.rtc.webservices.course.resources.AuthorResource;
+import org.roi.rtc.webservices.course.resources.CourseTypeResource;
 import org.roi.rtc.webservices.course.resources.HelloResource;
 
 /**
@@ -40,5 +41,6 @@ public class MainService extends Service<MainServiceConfiguration> {
         final AuthorDao authorDao = new AuthorDaoImpl(hibernate.getSessionFactory());
         env.addResource(new HelloResource(conf.getMessages()));
         env.addResource(new AuthorResource(authorDao));
+        env.addResource(new CourseTypeResource());
     }
 }

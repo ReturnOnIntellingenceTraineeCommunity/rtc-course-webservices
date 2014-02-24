@@ -86,7 +86,7 @@ public class CoursesTest {
 
     @Test
     public void testSetStart() throws Exception {
-        String expected = "startTest1";
+        String expected = "startTest 1";
         courses.setStart(expected);
         String actual = courses.getStart();
         assertEquals(expected, actual);

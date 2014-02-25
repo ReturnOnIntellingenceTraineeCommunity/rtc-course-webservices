@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
  * @author Vladislav Pikus
  */
 @Entity
-@Table(name = "author_db")
+@Table(name = "author_db", uniqueConstraints = @UniqueConstraint(columnNames="email"))
 public class Author {
     private Integer id;
 

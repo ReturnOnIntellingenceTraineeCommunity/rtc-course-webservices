@@ -40,6 +40,7 @@ public class AuthorResourceTest extends ResourceTest {
     public void testFindById() throws Exception {
         when(mockDao.findById(1)).thenReturn(author);
         Author actual = client().resource("/author/1").get(Author.class);
+
         assertEquals(author, actual);
 
     }

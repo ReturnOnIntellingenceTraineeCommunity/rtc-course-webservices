@@ -1,7 +1,11 @@
 package org.roi.rtc.webservices.course.entities;
 
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -14,7 +18,7 @@ public class CoursesTest {
 
     @Before
     public void setUp() {
-        courses = new Courses("codeTest", "nameTest", "categoryTest", "curatorTest", "startTest", "endTest");
+        courses = new Courses("codeTest", "nameTest", CourseType.DEV, new Author("Vasya", "Pupkin", "vasia@gmail.com"), DateTime.now().toDate(), DateTime.now().toDate());
     }
 
     @Test
@@ -48,63 +52,28 @@ public class CoursesTest {
     }
 
     @Test
-    public void testGetCategory() throws Exception {
-        String expected = "categoryTest";
-        String actual = courses.getCategory();
-        assertEquals(expected, actual);
+    public void testGetTagsList() throws Exception {
+        assertNull(courses.getTagsList());
     }
 
     @Test
-    public void testSetCategory() throws Exception {
-        String expected = "categoryTest1";
-        courses.setCategory(expected);
-        String actual = courses.getCategory();
-        assertEquals(expected, actual);
+    public void testSetTagsList() throws Exception {
+        List<Tags> tagses = Arrays.asList(new Tags("Java"), new Tags("Hibernate"));
+        courses.setTagsList(tagses);
+        List<Tags> actual = courses.getTagsList();
+        assertEquals(actual, tagses);
+        assertTrue(actual.size() == 2);
     }
 
     @Test
-    public void testGetCurator() throws Exception {
-        String expected = "curatorTest";
-        String actual = courses.getCurator();
-        assertEquals(expected, actual);
+    public void testGetType() throws Exception {
+        assertEquals(CourseType.DEV, courses.getType());
     }
 
     @Test
-    public void testSetCurator() throws Exception {
-        String expected = "curatorTest1";
-        courses.setCurator(expected);
-        String actual = courses.getCurator();
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testGetStart() throws Exception {
-        String expected = "startTest";
-        String actual = courses.getStart();
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testSetStart() throws Exception {
-        String expected = "startTest 1";
-        courses.setStart(expected);
-        String actual = courses.getStart();
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testGetEnd() throws Exception {
-        String expected = "endTest";
-        String actual = courses.getEnd();
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testSetEnd() throws Exception {
-        String expected = "endTest1";
-        courses.setEnd(expected);
-        String actual = courses.getEnd();
-        assertEquals(expected, actual);
+    public void testSetType() throws Exception {
+        courses.setType(CourseType.BA);
+        assertEquals(CourseType.BA, courses.getType());
     }
 
     @Test
@@ -114,24 +83,10 @@ public class CoursesTest {
 
     @Test
     public void testSetId() throws Exception {
-        Integer expected = 10;
+        Integer expected = 2;
         courses.setId(expected);
         Integer actual = courses.getId();
-        assertNotNull(actual);
         assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testEquals() throws Exception {
-        Courses tmp = null;
-        assertFalse(courses.equals(tmp));
-        assertFalse(courses.equals(new Integer(1)));
-        tmp = courses;
-        assertTrue(courses.equals(tmp));
-        tmp = new Courses ("codeTest", "nameTest", "categoryTest", "curatorTest", "startTest", "endTest");
-        assertTrue(courses.equals(tmp));
-        tmp = new Courses();
-        assertFalse(courses.equals(tmp));
     }
 
     @Test
@@ -141,9 +96,20 @@ public class CoursesTest {
 
     @Test
     public void testToString() throws Exception {
-        //"codeTest", "nameTest", "categoryTest", "curatorTest", "startTest", "endTest");
-        String str = "Courses{id=null, code='codeTest', name='nameTest', category='categoryTest', start='startTest', end='endTest'}";
-        assertEquals(str, courses.toString());
+        assertNotNull(courses.toString());
+        assertTrue(courses.toString() != "");
     }
 
+    @Test
+    public void testEquals() throws Exception {
+        Courses tmp = null;
+        assertFalse(courses.equals(tmp));
+        tmp = courses;
+        assertTrue(tmp.equals(courses));
+        assertFalse(courses.equals(new Integer(1)));
+        tmp = new Courses("codeTest", "nameTest", CourseType.DEV, new Author("Vasya", "Pupkin", "vasia@gmail.com"), DateTime.now().toDate(), DateTime.now().toDate());
+        assertTrue(courses.equals(tmp));
+        tmp = new Courses();
+        assertFalse(courses.equals(tmp));
+    }
 }

@@ -1,76 +1,111 @@
 package org.roi.rtc.webservices.course.entities;
 
 import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author Eugene Lapshin
  */
 @Entity
-@Table(name = "courses_db")
+@Table(name = "courses_db",uniqueConstraints = @UniqueConstraint(columnNames="code"))
 public class Courses {
-private Integer id;
+    private Integer id;
 
-// первый вариант
-//    @NotEmpty
-//    @Size(min = 2, max = 30)
-//    private String code, name, category, curator, start, end;
-
-// второй вариант
     @NotEmpty
-    @Size(min = 2, max = 30)
     private String code;
 
     @NotEmpty
     @Size(min = 2, max = 30)
     private String name;
 
-    @NotEmpty
-    @Size(min = 2, max = 30)
-    private String category;
+    @NotNull
+    private CourseType type;
 
-    @NotEmpty
-    @Size(min = 2, max = 30)
-    private String curator;
+    @NotNull
+    private Author author;
 
-    @NotEmpty
-    @Size(min = 2, max = 30)
-    private String start;
+    @NotNull
+    private Date startDate;
 
-    @NotEmpty
-    @Size(min = 2, max = 30)
-    private String end;
+    @NotNull
+    private Date endDate;
+
+    private List<Tags> tagsList;
+
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @JoinTable(name="courses_tags",
+            joinColumns={@JoinColumn(name="tagId")},
+            inverseJoinColumns={@JoinColumn(name="id")})
+    public List<Tags> getTagsList() {
+        return tagsList;
+    }
+
+    public void setTagsList(List<Tags> tagsList) {
+        this.tagsList = tagsList;
+    }
+
+    @Column
+    @Enumerated(EnumType.ORDINAL)
+    public CourseType getType() {
+        return type;
+    }
+
+    public void setType(CourseType type) {
+        this.type = type;
+    }
+
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "AUTHOR_ID")
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
+    @Column
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    @Column
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    @Column(length = 38)
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     @Column(length = 30)
-    public String getCode() { return code; }
+    public String getName() {
+        return name;
+    }
 
-    public void setCode(String code) { this.code = code; }
-
-    @Column(length = 30)
-    public String getName() { return name; }
-
-    public void setName(String name) { this.name = name; }
-
-    @Column(length = 30)
-    public String getCategory() { return category; }
-
-    public void setCategory(String category) { this.category = category; }
-
-    @Column(length = 30)
-    public String getCurator() { return curator; }
-
-    public void setCurator(String curator) { this.curator = curator; }
-
-    @Column(length = 30)
-    public String getStart() { return start; }
-
-    public void setStart(String start) { this.start = start; }
-
-    @Column(length = 30)
-    public String getEnd() { return end; }
-
-    public void setEnd(String end) { this.end = end; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -86,14 +121,13 @@ private Integer id;
 
     }
 
-    public Courses(String code, String name, String category, String curator, String start, String end) {
+    public Courses(String code, String name, CourseType type, Author author, Date startDate, Date endDate) {
         this.code = code;
         this.name = name;
-        this.category = category;
-        this.curator = curator;
-        this.start = start;
-        this.end = end;
-
+        this.type = type;
+        this.author = author;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     @Override
@@ -102,15 +136,17 @@ private Integer id;
         if (o == null || getClass() != o.getClass()) return false;
 
         Courses courses = (Courses) o;
+
+        if (author != null ? !author.equals(courses.author) : courses.author != null) return false;
         if (code != null ? !code.equals(courses.code) : courses.code != null) return false;
+        if (endDate != null ? !endDate.equals(courses.endDate) : courses.endDate != null) return false;
+        if (id != null ? !id.equals(courses.id) : courses.id != null) return false;
         if (name != null ? !name.equals(courses.name) : courses.name != null) return false;
-        if (category != null ? !category.equals(courses.category) : courses.category != null) return false;
-        if (curator != null ? !curator.equals(courses.curator) : courses.curator != null) return false;
-        if (start != null ? !start.equals(courses.start) : courses.start != null) return false;
-        if (end != null ? !end.equals(courses.end) : courses.end != null) return false;
+        if (startDate != null ? !startDate.equals(courses.startDate) : courses.startDate != null) return false;
+        if (tagsList != null ? !tagsList.equals(courses.tagsList) : courses.tagsList != null) return false;
+        if (type != courses.type) return false;
 
         return true;
-
     }
 
     @Override
@@ -118,10 +154,11 @@ private Integer id;
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (code != null ? code.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (category != null ? category.hashCode() : 0);
-        result = 31 * result + (curator != null ? curator.hashCode() : 0);
-        result = 31 * result + (start != null ? start.hashCode() : 0);
-        result = 31 * result + (end != null ? end.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (author != null ? author.hashCode() : 0);
+        result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
+        result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
+        result = 31 * result + (tagsList != null ? tagsList.hashCode() : 0);
         return result;
     }
 
@@ -131,12 +168,12 @@ private Integer id;
         sb.append("id=").append(id);
         sb.append(", code='").append(code).append('\'');
         sb.append(", name='").append(name).append('\'');
-        sb.append(", category='").append(category).append('\'');
-        sb.append(", start='").append(start).append('\'');
-        sb.append(", end='").append(end).append('\'');
+        sb.append(", type=").append(type);
+        sb.append(", author=").append(author);
+        sb.append(", startDate=").append(startDate);
+        sb.append(", endDate=").append(endDate);
+        sb.append(", tagsList=").append(tagsList);
         sb.append('}');
         return sb.toString();
     }
-
-
 }

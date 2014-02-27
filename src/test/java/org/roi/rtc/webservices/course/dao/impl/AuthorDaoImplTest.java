@@ -47,10 +47,10 @@ public class AuthorDaoImplTest {
     public void testSaveOrUpdate() throws Exception {
         //HttpServer server = HttpServerFactory.create("http://localhost:8080/");
         //server.start();
-        WebResource service = Client.create().resource("http://localhost:8079/method/");
-        Courses courses = new Courses("codeTest", "Testing testing", CourseType.DEV, new Author("Vasya", "Pupkin", "vasia1@gmail.com"), DateTime.now().toDate(), DateTime.now().toDate());
-        List<Tags> tagses = Arrays.asList(new Tags("Java"), new Tags("Hibernate"));
-        courses.setTagsList(tagses);
+        WebResource service = Client.create().resource("http://146.185.176.193:8079/method/");
+        Courses courses = new Courses("codeTest", "Testing testing111", CourseType.DEV, new Author("Vasya", "Pupkin", "vasia@gmail.com"), DateTime.now().toDate(), DateTime.now().toDate());
+        //List<Tags> tagses = Arrays.asList(new Tags("Java"), new Tags("Hibernate"));
+        //courses.setTags(tagses);
         //service.path("courses").type(MediaType.APPLICATION_JSON).post(String.class, asJson(courses));
     }
 

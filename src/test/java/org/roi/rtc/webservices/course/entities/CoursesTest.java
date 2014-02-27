@@ -53,14 +53,14 @@ public class CoursesTest {
 
     @Test
     public void testGetTagsList() throws Exception {
-        assertNull(courses.getTagsList());
+        assertNull(courses.getTags());
     }
 
     @Test
     public void testSetTagsList() throws Exception {
         List<Tags> tagses = Arrays.asList(new Tags("Java"), new Tags("Hibernate"));
-        courses.setTagsList(tagses);
-        List<Tags> actual = courses.getTagsList();
+        courses.setTags(tagses);
+        List<Tags> actual = courses.getTags();
         assertEquals(actual, tagses);
         assertTrue(actual.size() == 2);
     }

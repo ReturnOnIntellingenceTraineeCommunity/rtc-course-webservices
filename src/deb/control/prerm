@@ -4,6 +4,4 @@ if [ -f /var/log/upstart/rtc-course-webservices.log ]; then
     rm -f /var/log/upstart/rtc-course-webservices.log
 fi
 
-if [ -f /etc/init/rtc-course-webservices.conf ]; then
-    stop rtc-course-webservices
-fi
+stop rtc-course-webservices

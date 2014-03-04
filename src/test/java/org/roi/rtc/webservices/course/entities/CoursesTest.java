@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -16,9 +17,12 @@ public class CoursesTest {
 
     private Courses courses;
 
+    private Date start = DateTime.now().toDate();
+    private Date end = DateTime.now().toDate();
+
     @Before
     public void setUp() {
-        courses = new Courses("codeTest", "nameTest", CourseType.DEV, new Author("Vasya", "Pupkin", "vasia@gmail.com"), DateTime.now().toDate(), DateTime.now().toDate());
+        courses = new Courses("codeTest", "nameTest", CourseType.DEV, new Author("Vasya", "Pupkin", "vasia@gmail.com"), start, end);
     }
 
     @Test
@@ -107,9 +111,54 @@ public class CoursesTest {
         tmp = courses;
         assertTrue(tmp.equals(courses));
         assertFalse(courses.equals(new Integer(1)));
-        tmp = new Courses("codeTest", "nameTest", CourseType.DEV, new Author("Vasya", "Pupkin", "vasia@gmail.com"), DateTime.now().toDate(), DateTime.now().toDate());
+        tmp = new Courses("codeTest", "nameTest", CourseType.DEV, new Author("Vasya", "Pupkin", "vasia@gmail.com"), start, end);
         assertTrue(courses.equals(tmp));
         tmp = new Courses();
         assertFalse(courses.equals(tmp));
+    }
+
+    @Test
+    public void testGetAuthor() throws Exception {
+        Author expected = new Author("Vasya", "Pupkin", "vasia@gmail.com");
+        Author actual = courses.getAuthor();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testSetAuthor() throws Exception {
+        Author expected = new Author("Vas", "Pup", "v@gmail.com");
+        courses.setAuthor(expected);
+        Author actual = courses.getAuthor();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testGetStartDate() throws Exception {
+        Date expected = start;
+        Date actual = courses.getStartDate();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testSetStartDate() throws Exception {
+        Date expected = DateTime.now().toDate();
+        courses.setStartDate(expected);
+        Date actual = courses.getStartDate();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testGetEndDate() throws Exception {
+        Date expected = end;
+        Date actual = courses.getEndDate();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testSetEndDate() throws Exception {
+        Date expected = DateTime.now().toDate();
+        courses.setEndDate(expected);
+        Date actual = courses.getEndDate();
+        assertEquals(expected, actual);
     }
 }

@@ -7,6 +7,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 /**
+ * Author entity
+ *
  * @author Vladislav Pikus
  */
 @Entity

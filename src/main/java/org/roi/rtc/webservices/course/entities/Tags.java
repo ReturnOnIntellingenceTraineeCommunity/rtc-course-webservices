@@ -5,6 +5,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 
 /**
+ * Tags entity
+ *
  * @author Vladislav Pikus
  */
 @Entity

@@ -10,12 +10,19 @@ import java.util.Arrays;
 import java.util.Collection;
 
 /**
+ * Course type resource
+ *
  * @author Vladislav Pikus
  */
 @Path(value = "/course_type")
 @Produces(MediaType.APPLICATION_JSON)
 public class CourseTypeResource {
 
+    /**
+     * Return all types
+     *
+     * @return
+     */
     @GET
     public Collection<CourseType> getAll() {
         return Arrays.asList(CourseType.values());

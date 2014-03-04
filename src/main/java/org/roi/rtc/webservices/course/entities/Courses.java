@@ -9,7 +9,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * Course entity
+ *
  * @author Eugene Lapshin
+ * @author Vladislav Pikus
  */
 @Entity
 @Table(name = "courses_db",uniqueConstraints = @UniqueConstraint(columnNames="code"))

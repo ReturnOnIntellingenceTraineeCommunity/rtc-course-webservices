@@ -14,6 +14,8 @@ import java.util.Collection;
 import static com.google.common.base.Preconditions.checkArgument;
 
 /**
+ * Author resource
+ *
  * @author Vladislav Pikus
  */
 @Path(value = "/author")
@@ -26,6 +28,12 @@ public class AuthorResource {
         this.dao = dao;
     }
 
+    /**
+     * Find a author by id
+     *
+     * @param id identifier
+     * @return find obj
+     */
     @GET
     @Timed
     @UnitOfWork
@@ -38,6 +46,11 @@ public class AuthorResource {
         return author;
     }
 
+    /**
+     * Find all author in the DB
+     *
+     * @return
+     */
     @GET
     @Timed
     @UnitOfWork
@@ -45,12 +58,25 @@ public class AuthorResource {
         return dao.findAll();
     }
 
+    /**
+     * Save a new author in the DB
+     *
+     * @param author author for save
+     * @return saved author with id
+     */
     @POST
     @UnitOfWork
     public Author create(Author author) {
         return dao.create(author);
     }
 
+    /**
+     * Update an existing author
+     *
+     * @param author
+     * @param id
+     * @return
+     */
     @PUT
     @UnitOfWork
     @Path("{id}")
@@ -59,6 +85,11 @@ public class AuthorResource {
         return dao.update(author);
     }
 
+    /**
+     * Delete a author by id
+     *
+     * @param id
+     */
     @DELETE
     @UnitOfWork
     @Path("{id}")
@@ -66,6 +97,9 @@ public class AuthorResource {
         dao.delete(id.get());
     }
 
+    /**
+     * Delete all rows
+     */
     @DELETE
     @UnitOfWork
     public void deleteAll() {

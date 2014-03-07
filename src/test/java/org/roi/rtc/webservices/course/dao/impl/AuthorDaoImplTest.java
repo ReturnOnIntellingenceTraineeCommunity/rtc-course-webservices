@@ -2,25 +2,18 @@ package org.roi.rtc.webservices.course.dao.impl;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.container.httpserver.HttpServerFactory;
-import com.sun.net.httpserver.HttpServer;
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.roi.rtc.webservices.course.dao.AuthorDao;
 import org.roi.rtc.webservices.course.entities.Author;
 import org.roi.rtc.webservices.course.entities.CourseType;
 import org.roi.rtc.webservices.course.entities.Courses;
 import org.roi.rtc.webservices.course.entities.Tags;
 import org.skife.jdbi.v2.DBI;
 
-import javax.ws.rs.core.MediaType;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
-
-import static com.yammer.dropwizard.testing.JsonHelpers.asJson;
 
 /**
  * Created with IntelliJ IDEA.
@@ -50,7 +43,7 @@ public class AuthorDaoImplTest {
         WebResource service = Client.create().resource("http://localhost:8079/method/");
         Courses courses = new Courses("codeTest", "Testing testing", CourseType.DEV, new Author("Vasya", "Pupkin", "vasia1@gmail.com"), DateTime.now().toDate(), DateTime.now().toDate());
         List<Tags> tagses = Arrays.asList(new Tags("Java"), new Tags("Hibernate"));
-        courses.setTagsList(tagses);
+        courses.setTags(tagses);
         //service.path("courses").type(MediaType.APPLICATION_JSON).post(String.class, asJson(courses));
     }
 

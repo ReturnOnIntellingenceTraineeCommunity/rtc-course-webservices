@@ -38,18 +38,18 @@ public class Courses {
     @NotNull
     private Date endDate;
 
-    private List<Tags> tagsList;
+    private List<Tags> tags;
 
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(name="courses_tags",
             joinColumns={@JoinColumn(name="tagId")},
             inverseJoinColumns={@JoinColumn(name="id")})
-    public List<Tags> getTagsList() {
-        return tagsList;
+    public List<Tags> getTags() {
+        return tags;
     }
 
-    public void setTagsList(List<Tags> tagsList) {
-        this.tagsList = tagsList;
+    public void setTags(List<Tags> tags) {
+        this.tags = tags;
     }
 
     @Column
@@ -146,7 +146,7 @@ public class Courses {
         if (id != null ? !id.equals(courses.id) : courses.id != null) return false;
         if (name != null ? !name.equals(courses.name) : courses.name != null) return false;
         if (startDate != null ? !startDate.equals(courses.startDate) : courses.startDate != null) return false;
-        if (tagsList != null ? !tagsList.equals(courses.tagsList) : courses.tagsList != null) return false;
+        if (tags != null ? !tags.equals(courses.tags) : courses.tags != null) return false;
         if (type != courses.type) return false;
 
         return true;
@@ -161,7 +161,7 @@ public class Courses {
         result = 31 * result + (author != null ? author.hashCode() : 0);
         result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
-        result = 31 * result + (tagsList != null ? tagsList.hashCode() : 0);
+        result = 31 * result + (tags != null ? tags.hashCode() : 0);
         return result;
     }
 
@@ -175,7 +175,7 @@ public class Courses {
         sb.append(", author=").append(author);
         sb.append(", startDate=").append(startDate);
         sb.append(", endDate=").append(endDate);
-        sb.append(", tagsList=").append(tagsList);
+        sb.append(", tags=").append(tags);
         sb.append('}');
         return sb.toString();
     }

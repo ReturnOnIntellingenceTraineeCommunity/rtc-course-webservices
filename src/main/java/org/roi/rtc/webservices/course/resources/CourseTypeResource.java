@@ -1,8 +1,6 @@
 package org.roi.rtc.webservices.course.resources;
 
 import org.roi.rtc.webservices.course.entities.CourseType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -20,8 +18,6 @@ import java.util.Collection;
 @Path(value = "/course_type")
 @Produces(MediaType.APPLICATION_JSON)
 public class CourseTypeResource {
-
-    private static Logger LOG = LoggerFactory.getLogger(AuthorResource.class.getName());
 
     /**
      * Return all types

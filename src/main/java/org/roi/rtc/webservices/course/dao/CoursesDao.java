@@ -5,7 +5,8 @@ import org.roi.rtc.webservices.course.entities.Courses;
 import java.util.Collection;
 
 /**
- * Course dao interface
+ * Data Access Object Interface
+ * Provides CRUD operations with {@link Courses} objects
  *
  * @author Vladislav Pikus
  */
@@ -14,23 +15,23 @@ public interface CoursesDao {
     /**
      * Save a new course in the DB
      *
-     * @param course
-     * @return
+     * @param course course for save
+     * @return saved course
      */
     Courses create(Courses course);
 
     /**
      * Update an existing course
      *
-     * @param course
-     * @return
+     * @param course course for update
+     * @return updated course
      */
     Courses update(Courses course);
 
     /**
-     * Check code exist
+     * Check course code exist
      *
-     * @param code code
+     * @param code course code
      * @return true if exist, false - not exist
      */
     boolean exist(String code);
@@ -38,34 +39,34 @@ public interface CoursesDao {
     /**
      * Delete an existing course by id
      *
-     * @param id
+     * @param id course id
      */
     void delete(Integer id);
 
     /**
-     * Delete all rows
+     * Delete all courses
      */
     void deleteAll();
 
     /**
-     * Get row count
+     * Get courses count
      *
-     * @return
+     * @return courses count
      */
     Integer getCount();
 
     /**
-     * Find all courses in the DB
+     * Find collection of courses in the DB
      *
-     * @return
+     * @return collection of courses
      */
     Collection<Courses> findAll();
 
     /**
      * Find a course by id
      *
-     * @param id
-     * @return
+     * @param id course id
+     * @return course
      */
     Courses findById(Integer id);
 }

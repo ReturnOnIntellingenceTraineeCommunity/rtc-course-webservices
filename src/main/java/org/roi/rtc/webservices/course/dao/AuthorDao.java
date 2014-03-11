@@ -5,7 +5,8 @@ import org.roi.rtc.webservices.course.entities.Author;
 import java.util.Collection;
 
 /**
- * Author dao interface
+ * Data Access Object Interface
+ * Provides CRUD operations with {@link Author} objects
  *
  * @author Vladislav Pikus
  */
@@ -22,41 +23,42 @@ public interface AuthorDao {
     /**
      * Update an existing author
      *
-     * @param author
-     * @return
+     * @param author    author for update
+     * @return updated author
      */
     Author update(Author author);
 
     /**
      * Delete a author by id
      *
-     * @param id
+     * @param id author id
      */
     void delete(Integer id);
 
     /**
-     * Delete all rows
+     * Delete all authors
      */
     void deleteAll();
 
     /**
-     * Get row count
+     * Get authors count
      *
-     * @return row count
+     * @return authors count
      */
     Integer getCount();
 
     /**
-     * Find all author in the DB
+     * Find collection of author in the DB
      *
-     * @return
+     * @return collection of author
      */
     Collection<Author> findAll();
 
     /**
      * Find a author by id
-     * @param id identifier
-     * @return find obj
+     *
+     * @param id author id
+     * @return author
      */
     Author findById(Integer id);
 }

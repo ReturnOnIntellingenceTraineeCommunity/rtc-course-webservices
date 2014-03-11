@@ -11,7 +11,8 @@ import org.roi.rtc.webservices.course.entities.Tags;
 import java.util.Collection;
 
 /**
- * Tag dao implementation
+ * Data Access Object Implementation
+ * Extend by {@link AbstractDAO}
  *
  * @author Vladislav Pikus
  */
@@ -26,10 +27,7 @@ public class TagsDaoImpl extends AbstractDAO<Tags> implements TagsDao {
     }
 
     /**
-     * Save a tag in the DB
-     *
-     * @param tag
-     * @return
+     * @see TagsDao
      */
     @Override
     public Tags create(Tags tag) {
@@ -38,10 +36,7 @@ public class TagsDaoImpl extends AbstractDAO<Tags> implements TagsDao {
     }
 
     /**
-     * Update a existing tag
-     *
-     * @param tag
-     * @return
+     * @see TagsDao
      */
     @Override
     public Tags update(Tags tag) {
@@ -50,10 +45,7 @@ public class TagsDaoImpl extends AbstractDAO<Tags> implements TagsDao {
     }
 
     /**
-     * Check tagName exist
-     *
-     * @param tag
-     * @return true if exist, false - not exist
+     * @see TagsDao
      */
     @Override
     public boolean exist(Tags tag) {
@@ -62,9 +54,7 @@ public class TagsDaoImpl extends AbstractDAO<Tags> implements TagsDao {
     }
 
     /**
-     * Delete a tag by id
-     *
-     * @param id
+     * @see TagsDao
      */
     @Override
     public void delete(Integer id) {
@@ -75,7 +65,7 @@ public class TagsDaoImpl extends AbstractDAO<Tags> implements TagsDao {
     }
 
     /**
-     * Delete all rows
+     * @see TagsDao
      */
     @Override
     public void deleteAll() {
@@ -83,9 +73,7 @@ public class TagsDaoImpl extends AbstractDAO<Tags> implements TagsDao {
     }
 
     /**
-     * Get row count
-     *
-     * @return
+     * @see TagsDao
      */
     @Override
     public Integer getCount() {
@@ -94,9 +82,7 @@ public class TagsDaoImpl extends AbstractDAO<Tags> implements TagsDao {
     }
 
     /**
-     * Find all tags
-     *
-     * @return
+     * @see TagsDao
      */
     @Override
     public Collection<Tags> findAll() {
@@ -105,9 +91,7 @@ public class TagsDaoImpl extends AbstractDAO<Tags> implements TagsDao {
     }
 
     /**
-     * Find a tag by id
-     * @param id
-     * @return
+     * @see TagsDao
      */
     @Override
     public Tags findById(Integer id) {

@@ -5,7 +5,8 @@ import org.roi.rtc.webservices.course.entities.Tags;
 import java.util.Collection;
 
 /**
- * Tag dao interface
+ * Data Access Object Interface
+ * Provides CRUD operations with {@link Tags} objects
  *
  * @author Vladislav Pikus
  */
@@ -14,23 +15,23 @@ public interface TagsDao {
     /**
      * Save a tag in the DB
      *
-     * @param tag
-     * @return
+     * @param tag tag for save
+     * @return saved tag
      */
     Tags create(Tags tag);
 
     /**
      * Update a existing tag
      *
-     * @param tag
-     * @return
+     * @param tag tag for update
+     * @return updated tag
      */
     Tags update(Tags tag);
 
     /**
-     * Check tagName exist
+     * Check tag name exist
      *
-     * @param tag
+     * @param tag tag for check
      * @return true if exist, false - not exist
      */
     boolean exist(Tags tag);
@@ -38,33 +39,33 @@ public interface TagsDao {
     /**
      * Delete a tag by id
      *
-     * @param id
+     * @param id tag id
      */
     void delete(Integer id);
 
     /**
-     * Delete all rows
+     * Delete all tags
      */
     void deleteAll();
 
     /**
-     * Get row count
+     * Get author count
      *
-     * @return
+     * @return author count
      */
     Integer getCount();
 
     /**
-     * Find all tags
+     * Find collection of tags
      *
-     * @return
+     * @return collection of tags
      */
     Collection<Tags> findAll();
 
     /**
      * Find a tag by id
-     * @param id
-     * @return
+     * @param id tag id
+     * @return tag
      */
     Tags findById(Integer id);
 }

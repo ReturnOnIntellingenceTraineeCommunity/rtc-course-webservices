@@ -1,7 +1,7 @@
 messages:
   hello: Hello world!
 http:
-  rootPath: /method/*
+  rootPath: /api/*
   port: 8079
   adminPort: 8179
 database:

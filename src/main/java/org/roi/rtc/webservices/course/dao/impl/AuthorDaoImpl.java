@@ -11,25 +11,18 @@ import org.roi.rtc.webservices.course.entities.Author;
 import java.util.Collection;
 
 /**
- * Author dao implementation
+ * Data Access Object Implementation
+ * Extend by {@link AbstractDAO}
  *
  * @author Vladislav Pikus
  */
 public class AuthorDaoImpl extends AbstractDAO<Author> implements AuthorDao {
-
-    /**
-     * Constructor
-     * @param factory session factory
-     */
     public AuthorDaoImpl(SessionFactory factory) {
         super(factory);
     }
 
     /**
-     * Create a new author in the DB
-     *
-     * @param author author for save
-     * @return saved author with id
+     * @see AuthorDao
      */
     @Override
     public Author create(Author author) {
@@ -38,10 +31,7 @@ public class AuthorDaoImpl extends AbstractDAO<Author> implements AuthorDao {
     }
 
     /**
-     * Update an existing author
-     *
-     * @param author
-     * @return
+     * @see AuthorDao
      */
     @Override
     public Author update(Author author) {
@@ -50,9 +40,7 @@ public class AuthorDaoImpl extends AbstractDAO<Author> implements AuthorDao {
     }
 
     /**
-     * Delete a author by id
-     *
-     * @param id
+     * @see AuthorDao
      */
     @Override
     public void delete(Integer id) {
@@ -63,9 +51,7 @@ public class AuthorDaoImpl extends AbstractDAO<Author> implements AuthorDao {
     }
 
     /**
-     * Get row count
-     *
-     * @return row count
+     * @see AuthorDao
      */
     @Override
     public Integer getCount() {
@@ -74,9 +60,7 @@ public class AuthorDaoImpl extends AbstractDAO<Author> implements AuthorDao {
     }
 
     /**
-     * Find all author in the DB
-     *
-     * @return
+     * @see AuthorDao
      */
     @Override
     public Collection<Author> findAll() {
@@ -85,9 +69,7 @@ public class AuthorDaoImpl extends AbstractDAO<Author> implements AuthorDao {
     }
 
     /**
-     * Find a author by id
-     * @param id identifier
-     * @return find obj
+     * @see AuthorDao
      */
     @Override
     public Author findById(Integer id) {
@@ -95,7 +77,7 @@ public class AuthorDaoImpl extends AbstractDAO<Author> implements AuthorDao {
     }
 
     /**
-     * Delete all rows
+     * @see AuthorDao
      */
     @Override
     public void deleteAll() {

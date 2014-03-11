@@ -11,25 +11,19 @@ import org.roi.rtc.webservices.course.entities.Courses;
 import java.util.Collection;
 
 /**
- * Course dao implementation
+ * Data Access Object Implementation
+ * Extend by {@link AbstractDAO}
  *
  * @author Vladislav Pikus
  */
 public class CoursesDaoImpl extends AbstractDAO<Courses> implements CoursesDao {
-    /**
-     * Constructor
-     *
-     * @param factory session factory
-     */
+
     public CoursesDaoImpl(SessionFactory factory) {
         super(factory);
     }
 
     /**
-     * Save a new course in the DB
-     *
-     * @param course
-     * @return
+     * @see CoursesDao
      */
     @Override
     public Courses create(Courses course) {
@@ -38,10 +32,7 @@ public class CoursesDaoImpl extends AbstractDAO<Courses> implements CoursesDao {
     }
 
     /**
-     * Update an existing course
-     *
-     * @param course
-     * @return
+     * @see CoursesDao
      */
     @Override
     public Courses update(Courses course) {
@@ -50,10 +41,7 @@ public class CoursesDaoImpl extends AbstractDAO<Courses> implements CoursesDao {
     }
 
     /**
-     * Check code exist
-     *
-     * @param code code
-     * @return true if exist, false - not exist
+     * @see CoursesDao
      */
     @Override
     public boolean exist(String code) {
@@ -62,9 +50,7 @@ public class CoursesDaoImpl extends AbstractDAO<Courses> implements CoursesDao {
     }
 
     /**
-     * Delete an existing course by id
-     *
-     * @param id
+     * @see CoursesDao
      */
     @Override
     public void delete(Integer id) {
@@ -75,7 +61,7 @@ public class CoursesDaoImpl extends AbstractDAO<Courses> implements CoursesDao {
     }
 
     /**
-     * Delete all rows
+     * @see CoursesDao
      */
     @Override
     public void deleteAll() {
@@ -83,9 +69,7 @@ public class CoursesDaoImpl extends AbstractDAO<Courses> implements CoursesDao {
     }
 
     /**
-     * Get row count
-     *
-     * @return
+     * @see CoursesDao
      */
     @Override
     public Integer getCount() {
@@ -94,9 +78,7 @@ public class CoursesDaoImpl extends AbstractDAO<Courses> implements CoursesDao {
     }
 
     /**
-     * Find all courses in the DB
-     *
-     * @return
+     * @see CoursesDao
      */
     @Override
     public Collection<Courses> findAll() {
@@ -105,10 +87,7 @@ public class CoursesDaoImpl extends AbstractDAO<Courses> implements CoursesDao {
     }
 
     /**
-     * Find a course by id
-     *
-     * @param id
-     * @return
+     * @see CoursesDao
      */
     @Override
     public Courses findById(Integer id) {

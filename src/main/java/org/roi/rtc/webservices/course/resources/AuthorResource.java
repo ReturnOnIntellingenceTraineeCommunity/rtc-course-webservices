@@ -10,17 +10,22 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
 /**
- * Author resource
+ * WebService Resource
+ * Provides with {@link Author}
  *
  * @author Vladislav Pikus
  */
 @Path(value = "/author")
 @Produces(MediaType.APPLICATION_JSON)
 public class AuthorResource {
+
+    private static Logger LOG = LoggerFactory.getLogger(AuthorResource.class.getName());
 
     private final AuthorDao dao;
 
@@ -31,8 +36,8 @@ public class AuthorResource {
     /**
      * Find a author by id
      *
-     * @param id identifier
-     * @return find obj
+     * @param id author id
+     * @return author
      */
     @GET
     @Timed
@@ -41,15 +46,17 @@ public class AuthorResource {
     public Author findById(@PathParam("id") IntParam id) {
         Author author = dao.findById(id.get());
         if (author == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+            RuntimeException ex = new WebApplicationException(Response.Status.NOT_FOUND);
+            LOG.error("Exception: ", ex);
+            throw ex;
         }
         return author;
     }
 
     /**
-     * Find all author in the DB
+     * Find collection of author in the DB
      *
-     * @return
+     * @return collection of author
      */
     @GET
     @Timed
@@ -73,9 +80,9 @@ public class AuthorResource {
     /**
      * Update an existing author
      *
-     * @param author
-     * @param id
-     * @return
+     * @param author author for update
+     * @param id author id
+     * @return updated author
      */
     @PUT
     @UnitOfWork
@@ -88,7 +95,7 @@ public class AuthorResource {
     /**
      * Delete a author by id
      *
-     * @param id
+     * @param id author id
      */
     @DELETE
     @UnitOfWork
@@ -98,7 +105,7 @@ public class AuthorResource {
     }
 
     /**
-     * Delete all rows
+     * Delete all authors
      */
     @DELETE
     @UnitOfWork

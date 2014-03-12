@@ -10,15 +10,22 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
 /**
+ * WebService Resource
+ * Provides with {@link Author}
+ *
  * @author Vladislav Pikus
  */
 @Path(value = "/author")
 @Produces(MediaType.APPLICATION_JSON)
 public class AuthorResource {
+
+    private static Logger LOG = LoggerFactory.getLogger(AuthorResource.class.getName());
 
     private final AuthorDao dao;
 
@@ -26,6 +33,12 @@ public class AuthorResource {
         this.dao = dao;
     }
 
+    /**
+     * Find a author by id
+     *
+     * @param id author id
+     * @return author
+     */
     @GET
     @Timed
     @UnitOfWork
@@ -33,11 +46,18 @@ public class AuthorResource {
     public Author findById(@PathParam("id") IntParam id) {
         Author author = dao.findById(id.get());
         if (author == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+            RuntimeException ex = new WebApplicationException(Response.Status.NOT_FOUND);
+            LOG.error("Exception: ", ex);
+            throw ex;
         }
         return author;
     }
 
+    /**
+     * Find collection of author in the DB
+     *
+     * @return collection of author
+     */
     @GET
     @Timed
     @UnitOfWork
@@ -45,12 +65,25 @@ public class AuthorResource {
         return dao.findAll();
     }
 
+    /**
+     * Save a new author in the DB
+     *
+     * @param author author for save
+     * @return saved author with id
+     */
     @POST
     @UnitOfWork
     public Author create(Author author) {
         return dao.create(author);
     }
 
+    /**
+     * Update an existing author
+     *
+     * @param author author for update
+     * @param id author id
+     * @return updated author
+     */
     @PUT
     @UnitOfWork
     @Path("{id}")
@@ -59,6 +92,11 @@ public class AuthorResource {
         return dao.update(author);
     }
 
+    /**
+     * Delete a author by id
+     *
+     * @param id author id
+     */
     @DELETE
     @UnitOfWork
     @Path("{id}")
@@ -66,6 +104,9 @@ public class AuthorResource {
         dao.delete(id.get());
     }
 
+    /**
+     * Delete all authors
+     */
     @DELETE
     @UnitOfWork
     public void deleteAll() {

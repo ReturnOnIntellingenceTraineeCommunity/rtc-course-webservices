@@ -5,13 +5,16 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
+ * Author entity
+ *
  * @author Vladislav Pikus
  */
 @Entity
 @Table(name = "author_db", uniqueConstraints = @UniqueConstraint(columnNames="email"))
-public class Author {
+public class Author implements Serializable {
     private Integer id;
 
     @NotEmpty

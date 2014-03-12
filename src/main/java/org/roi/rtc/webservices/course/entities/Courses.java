@@ -5,15 +5,19 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 /**
+ * Course entity
+ *
  * @author Eugene Lapshin
+ * @author Vladislav Pikus
  */
 @Entity
 @Table(name = "courses_db",uniqueConstraints = @UniqueConstraint(columnNames="code"))
-public class Courses {
+public class Courses implements Serializable {
     private Integer id;
 
     @NotEmpty

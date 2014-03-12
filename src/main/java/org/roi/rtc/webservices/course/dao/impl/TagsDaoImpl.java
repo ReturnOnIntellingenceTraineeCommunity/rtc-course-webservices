@@ -11,31 +11,51 @@ import org.roi.rtc.webservices.course.entities.Tags;
 import java.util.Collection;
 
 /**
+ * Data Access Object Implementation
+ * Extend by {@link AbstractDAO}
+ *
  * @author Vladislav Pikus
  */
 public class TagsDaoImpl extends AbstractDAO<Tags> implements TagsDao {
+    /**
+     * Constructor
+     *
+     * @param factory session factory
+     */
     public TagsDaoImpl(SessionFactory factory) {
         super(factory);
     }
 
+    /**
+     * @see TagsDao
+     */
     @Override
     public Tags create(Tags tag) {
         currentSession().save(tag);
         return tag;
     }
 
+    /**
+     * @see TagsDao
+     */
     @Override
     public Tags update(Tags tag) {
         currentSession().update(tag);
         return tag;
     }
 
+    /**
+     * @see TagsDao
+     */
     @Override
     public boolean exist(Tags tag) {
         return (Boolean) currentSession().createQuery("select exists(select 1 from Tags t where t.value = :vlu)")
                 .setParameter("vlu", tag.getValue()).uniqueResult();
     }
 
+    /**
+     * @see TagsDao
+     */
     @Override
     public void delete(Integer id) {
         Tags tags = (Tags) currentSession().get(Tags.class, id);
@@ -44,23 +64,35 @@ public class TagsDaoImpl extends AbstractDAO<Tags> implements TagsDao {
         }
     }
 
+    /**
+     * @see TagsDao
+     */
     @Override
     public void deleteAll() {
         currentSession().createQuery("delete from Tags");
     }
 
+    /**
+     * @see TagsDao
+     */
     @Override
     public Integer getCount() {
         return ((Long) currentSession().createCriteria(Tags.class).setProjection(Projections.rowCount())
                 .uniqueResult()).intValue();
     }
 
+    /**
+     * @see TagsDao
+     */
     @Override
     public Collection<Tags> findAll() {
         return currentSession().createCriteria(Tags.class).addOrder(Order.asc("id"))
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
     }
 
+    /**
+     * @see TagsDao
+     */
     @Override
     public Tags findById(Integer id) {
         return (Tags) currentSession().get(Tags.class, id);

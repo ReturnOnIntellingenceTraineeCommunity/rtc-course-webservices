@@ -58,7 +58,8 @@ public class TagsTest {
         tmp = new Tags("C#");
         tmp.setId(1);
         assertTrue(tag.equals(tmp));
-        tmp = new Tags("Java");
+        tmp = new Tags();
+        tmp.setId(1);
         assertFalse(tag.equals(tmp));
     }
 

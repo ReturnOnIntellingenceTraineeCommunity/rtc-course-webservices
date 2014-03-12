@@ -8,11 +8,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Vlablack
- * Date: 14.02.14
- * Time: 22:16
- * To change this template use File | Settings | File Templates.
+ * Configuration
+ *
+ * @author Vladislav Pikus
  */
 public class MainServiceConfiguration extends Configuration {
 

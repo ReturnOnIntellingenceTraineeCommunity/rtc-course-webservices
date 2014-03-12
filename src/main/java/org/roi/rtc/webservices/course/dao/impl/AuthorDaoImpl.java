@@ -11,6 +11,9 @@ import org.roi.rtc.webservices.course.entities.Author;
 import java.util.Collection;
 
 /**
+ * Data Access Object Implementation
+ * Extend by {@link AbstractDAO}
+ *
  * @author Vladislav Pikus
  */
 public class AuthorDaoImpl extends AbstractDAO<Author> implements AuthorDao {
@@ -18,18 +21,27 @@ public class AuthorDaoImpl extends AbstractDAO<Author> implements AuthorDao {
         super(factory);
     }
 
+    /**
+     * @see AuthorDao
+     */
     @Override
     public Author create(Author author) {
         currentSession().save(author);
         return author;
     }
 
+    /**
+     * @see AuthorDao
+     */
     @Override
     public Author update(Author author) {
         currentSession().update(author);
         return author;
     }
 
+    /**
+     * @see AuthorDao
+     */
     @Override
     public void delete(Integer id) {
         Author author = (Author) currentSession().get(Author.class, id);
@@ -38,23 +50,35 @@ public class AuthorDaoImpl extends AbstractDAO<Author> implements AuthorDao {
         }
     }
 
+    /**
+     * @see AuthorDao
+     */
     @Override
     public Integer getCount() {
         return ((Long) currentSession().createCriteria(Author.class).setProjection(Projections.rowCount())
                 .uniqueResult()).intValue();
     }
 
+    /**
+     * @see AuthorDao
+     */
     @Override
     public Collection<Author> findAll() {
         return currentSession().createCriteria(Author.class).addOrder(Order.asc("id"))
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
     }
 
+    /**
+     * @see AuthorDao
+     */
     @Override
     public Author findById(Integer id) {
         return (Author) currentSession().get(Author.class, id);
     }
 
+    /**
+     * @see AuthorDao
+     */
     @Override
     public void deleteAll() {
         currentSession().createQuery("delete from Author");

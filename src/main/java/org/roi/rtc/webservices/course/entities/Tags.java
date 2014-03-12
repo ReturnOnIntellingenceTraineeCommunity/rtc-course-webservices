@@ -3,13 +3,16 @@ package org.roi.rtc.webservices.course.entities;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
+ * Tags entity
+ *
  * @author Vladislav Pikus
  */
 @Entity
 @Table(name = "tags_db",uniqueConstraints = @UniqueConstraint(columnNames="value"))
-public class Tags {
+public class Tags implements Serializable {
 
     private Integer id;
 

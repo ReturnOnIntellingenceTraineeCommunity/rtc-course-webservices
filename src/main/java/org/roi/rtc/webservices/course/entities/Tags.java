@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Tags entity
@@ -12,6 +13,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "tags_db",uniqueConstraints = @UniqueConstraint(columnNames="value"))
+@XmlRootElement
 public class Tags implements Serializable {
 
     private Integer id;

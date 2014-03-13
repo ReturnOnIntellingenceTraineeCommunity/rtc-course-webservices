@@ -8,6 +8,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Course entity
@@ -17,6 +18,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "courses_db",uniqueConstraints = @UniqueConstraint(columnNames="code"))
+@XmlRootElement
 public class Courses implements Serializable {
     private Integer id;
 

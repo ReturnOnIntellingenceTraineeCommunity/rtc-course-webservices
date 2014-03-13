@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Author entity
@@ -14,6 +15,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "author_db", uniqueConstraints = @UniqueConstraint(columnNames="email"))
+@XmlRootElement
 public class Author implements Serializable {
     private Integer id;
 

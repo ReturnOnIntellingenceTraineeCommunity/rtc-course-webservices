@@ -11,6 +11,7 @@ import org.roi.rtc.webservices.course.dao.impl.CoursesDaoImpl;
 import org.roi.rtc.webservices.course.entities.Author;
 import org.roi.rtc.webservices.course.entities.CourseType;
 import org.roi.rtc.webservices.course.entities.Courses;
+import org.roi.rtc.webservices.course.model.CourseFilter;
 
 import javax.ws.rs.core.MediaType;
 import java.util.Arrays;
@@ -20,6 +21,7 @@ import java.util.Date;
 import static com.yammer.dropwizard.testing.JsonHelpers.asJson;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -104,5 +106,18 @@ public class CoursesResourceTest extends ResourceTest {
     public void testDeleteAll() throws Exception {
         client().resource("/courses").delete();
         verify(mockDao).deleteAll();
+    }
+
+    @Test
+    public void testFiltering() throws Exception {
+        Collection<Courses> courses = Arrays.asList(course);
+        when(mockDao.findByFilter(any(CourseFilter.class))).thenReturn(courses);
+        String result = client().resource("/courses/filter")
+                .queryParam("name", "1")
+                .queryParam("date", "11-01-1993")
+                .queryParam("categories", "1;2")
+                .queryParam("tags", "1")
+                .type(MediaType.APPLICATION_JSON).get(String.class);
+        assertEquals(result, asJson(courses));
     }
 }

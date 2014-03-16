@@ -4,6 +4,7 @@ import com.yammer.dropwizard.hibernate.UnitOfWork;
 import com.yammer.dropwizard.jersey.params.IntParam;
 import org.roi.rtc.webservices.course.dao.CoursesDao;
 import org.roi.rtc.webservices.course.entities.Courses;
+import org.roi.rtc.webservices.course.model.CourseFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -114,5 +115,29 @@ public class CoursesResource {
     @UnitOfWork
     public void deleteAll() {
         dao.deleteAll();
+    }
+
+    /**
+     * Find collection of courses by filter param
+     * For example: courses/filter?name=test&date=11-01-2010&categories=dev;qa&tags=java;spring
+     * Query params such as category and tags is array and items to be separated ";" delim
+     * Query params such as date by the following rule: dd-MM-yyyy
+     *
+     * @param name title for search
+     * @param date start date
+     * @param categories categories array
+     * @param tags tags array
+     * @return courses collection
+     */
+    @GET
+    @Path("filter")
+    @UnitOfWork
+    public Collection<Courses> filtering(@QueryParam("name") String name,
+                                         @QueryParam("date") String date,
+                                         @QueryParam("categories") String categories,
+                                         @QueryParam("tags") String tags) {
+        CourseFilter filter = new CourseFilter.Builder().title(name).startDate(date)
+                .categories(categories).tags(tags).build();
+        return dao.findByFilter(filter);
     }
 }

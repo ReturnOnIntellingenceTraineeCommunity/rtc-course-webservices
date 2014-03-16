@@ -1,6 +1,7 @@
 package org.roi.rtc.webservices.course.dao;
 
 import org.roi.rtc.webservices.course.entities.Courses;
+import org.roi.rtc.webservices.course.model.CourseFilter;
 
 import java.util.Collection;
 
@@ -69,4 +70,12 @@ public interface CoursesDao {
      * @return course
      */
     Courses findById(Integer id);
+
+    /**
+     * Find collection of courses by filter parameters. Such as (title, category, tags, startDate)
+     *
+     * @param filter filter object
+     * @return collection of courses
+     */
+    Collection<Courses> findByFilter(CourseFilter filter);
 }

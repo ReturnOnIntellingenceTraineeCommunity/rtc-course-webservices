@@ -12,6 +12,7 @@ import org.roi.rtc.webservices.course.entities.Courses;
 import org.roi.rtc.webservices.course.entities.Tags;
 import org.skife.jdbi.v2.DBI;
 
+import javax.ws.rs.core.MediaType;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,13 +39,13 @@ public class AuthorDaoImplTest {
 
     @Test
     public void testSaveOrUpdate() throws Exception {
-        //HttpServer server = HttpServerFactory.create("http://localhost:8080/");
-        //server.start();
-        WebResource service = Client.create().resource("http://localhost:8079/method/");
-        Courses courses = new Courses("codeTest", "Testing testing", CourseType.DEV, new Author("Vasya", "Pupkin", "vasia1@gmail.com"), DateTime.now().toDate(), DateTime.now().toDate());
-        List<Tags> tagses = Arrays.asList(new Tags("Java"), new Tags("Hibernate"));
-        courses.setTags(tagses);
-        //service.path("courses").type(MediaType.APPLICATION_JSON).post(String.class, asJson(courses));
+        WebResource service = Client.create().resource("http://localhost:8079/api/");
+        /*System.out.println(service.path("courses/filter")
+                .queryParam("name", "1")
+                .queryParam("date", "11-01-1993")
+                .queryParam("categories", "1")
+                .queryParam("tags", "1")
+                .type(MediaType.APPLICATION_JSON).get(String.class));*/
     }
 
     @Test

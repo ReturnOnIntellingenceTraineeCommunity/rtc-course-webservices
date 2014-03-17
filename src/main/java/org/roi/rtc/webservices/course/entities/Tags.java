@@ -1,10 +1,11 @@
 package org.roi.rtc.webservices.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 /**
  * Tags entity
@@ -15,7 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "tags_db",uniqueConstraints = @UniqueConstraint(columnNames="value"))
 @XmlRootElement
 public class Tags implements Serializable {
-
+    @JsonIgnore
     private Integer id;
 
     @NotEmpty

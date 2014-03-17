@@ -137,4 +137,33 @@ public class CoursesDaoImpl extends AbstractDAO<Courses> implements CoursesDao {
         return criteria.addOrder(Order.asc("id")).setFirstResult(page.getFirstResult())
                 .setMaxResults(page.getMaxResult()).list();
     }
+
+    /**
+     * @see CoursesDao#findByCode(String)
+     */
+    @Override
+    public Courses findByCode(String code) {
+        return (Courses) currentSession().createCriteria(Courses.class)
+                .add(Restrictions.eq("code", code)).uniqueResult();
+    }
+
+    /**
+     * @see CoursesDao#delete(String)
+     */
+    @Override
+    public void delete(String code) {
+        Courses courses = findByCode(code);
+        if (courses != null) {
+            currentSession().delete(courses);
+        }
+    }
+
+    /**
+     * @see CoursesDao#merge(Courses)
+     */
+    @Override
+    public Courses merge(Courses course) {
+        currentSession().merge(course);
+        return course;
+    }
 }

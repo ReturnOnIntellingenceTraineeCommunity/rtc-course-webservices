@@ -51,7 +51,7 @@ public class MainService extends Service<MainServiceConfiguration> {
         env.addResource(new TagsResource(tagsDao));
 
         final CoursesDao coursesDao = new CoursesDaoImpl(hibernate.getSessionFactory());
-        env.addResource(new CoursesResource(coursesDao));
+        env.addResource(new CoursesResource(coursesDao, authorDao, tagsDao));
 
         env.addResource(new HelloResource(conf.getMessages()));
         env.addResource(new CourseTypeResource());

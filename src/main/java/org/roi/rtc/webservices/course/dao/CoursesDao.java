@@ -81,4 +81,27 @@ public interface CoursesDao {
      * @return collection of courses
      */
     Collection<Courses> findByFilter(CourseFilter filter, Page page);
+
+    /**
+     * Find course object by code
+     *
+     * @param code course code
+     * @return course object
+     */
+    Courses findByCode(String code);
+
+    /**
+     * Delete course by code
+     *
+     * @param code course code
+     */
+    void delete(String code);
+
+    /**
+     * SaveOrUpdate with merge associated entities
+     *
+     * @param course course object
+     * @return course object with updated keys
+     */
+    Courses merge(Courses course);
 }

@@ -2,6 +2,7 @@ package org.roi.rtc.webservices.course.dao.impl;
 
 import com.yammer.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
@@ -11,6 +12,7 @@ import org.roi.rtc.webservices.course.dao.CoursesDao;
 import org.roi.rtc.webservices.course.entities.CourseType;
 import org.roi.rtc.webservices.course.entities.Courses;
 import org.roi.rtc.webservices.course.model.CourseFilter;
+import org.roi.rtc.webservices.course.model.Page;
 
 import java.util.Collection;
 import java.util.Date;
@@ -100,11 +102,13 @@ public class CoursesDaoImpl extends AbstractDAO<Courses> implements CoursesDao {
     }
 
     /**
-     * @see CoursesDao#findByFilter(CourseFilter)
+     * @see CoursesDao#findByFilter(CourseFilter, Page)
      */
     @Override
-    public Collection<Courses> findByFilter(CourseFilter filter) {
+    public Collection<Courses> findByFilter(CourseFilter filter, Page page) {
         Criteria criteria = currentSession().createCriteria(Courses.class);
+        criteria.setFetchMode("tags", FetchMode.SELECT);
+        criteria.setFetchMode("author", FetchMode.SELECT);
         final String title = filter.getTitle();
         if (title != null && !title.equals("")) {
             criteria.add(Restrictions.like("name", "%" + title + "%"));
@@ -130,7 +134,7 @@ public class CoursesDaoImpl extends AbstractDAO<Courses> implements CoursesDao {
             }
             criteria.add(tagDis);
         }
-        return criteria.addOrder(Order.asc("id"))
-                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+        return criteria.addOrder(Order.asc("id")).setFirstResult(page.getFirstResult())
+                .setMaxResults(page.getMaxResult()).list();
     }
 }

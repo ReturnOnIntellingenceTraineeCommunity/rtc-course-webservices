@@ -5,6 +5,7 @@ import com.yammer.dropwizard.jersey.params.IntParam;
 import org.roi.rtc.webservices.course.dao.CoursesDao;
 import org.roi.rtc.webservices.course.entities.Courses;
 import org.roi.rtc.webservices.course.model.CourseFilter;
+import org.roi.rtc.webservices.course.model.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -119,7 +120,7 @@ public class CoursesResource {
 
     /**
      * Find collection of courses by filter param
-     * For example: courses/filter?name=test&date=11-01-2010&categories=dev;qa&tags=java;spring
+     * For example: courses/filter?name=test&date=11-01-2010&categories=dev;qa&tags=java;spring&pageNumber=1&maxResult=10
      * Query params such as category and tags is array and items to be separated ";" delim
      * Query params such as date by the following rule: dd-MM-yyyy
      *
@@ -127,6 +128,8 @@ public class CoursesResource {
      * @param date start date
      * @param categories categories array
      * @param tags tags array
+     * @param maxResult courses count per page (started on 0)
+     * @param pageNumber current page (started on 0)
      * @return courses collection
      */
     @GET
@@ -135,9 +138,25 @@ public class CoursesResource {
     public Collection<Courses> filtering(@QueryParam("name") String name,
                                          @QueryParam("date") String date,
                                          @QueryParam("categories") String categories,
-                                         @QueryParam("tags") String tags) {
+                                         @QueryParam("tags") String tags,
+                                         @QueryParam("pageNumber") int pageNumber,
+                                         @QueryParam("maxResult") int maxResult) {
         CourseFilter filter = new CourseFilter.Builder().title(name).startDate(date)
                 .categories(categories).tags(tags).build();
-        return dao.findByFilter(filter);
+        Page page = new Page.Builder(dao.getCount()).page(pageNumber).maxResult(maxResult)
+                .build();
+        return dao.findByFilter(filter, page);
+    }
+
+    /**
+     * Get courses count
+     *
+     * @return courses count
+     */
+    @GET
+    @Path("count")
+    @UnitOfWork
+    public Integer getCount() {
+        return dao.getCount();
     }
 }

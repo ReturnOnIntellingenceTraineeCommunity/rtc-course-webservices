@@ -2,6 +2,7 @@ package org.roi.rtc.webservices.course.dao;
 
 import org.roi.rtc.webservices.course.entities.Courses;
 import org.roi.rtc.webservices.course.model.CourseFilter;
+import org.roi.rtc.webservices.course.model.Page;
 
 import java.util.Collection;
 
@@ -73,9 +74,11 @@ public interface CoursesDao {
 
     /**
      * Find collection of courses by filter parameters. Such as (title, category, tags, startDate)
+     * And find with pagination criteria
      *
      * @param filter filter object
+     * @param page page object
      * @return collection of courses
      */
-    Collection<Courses> findByFilter(CourseFilter filter);
+    Collection<Courses> findByFilter(CourseFilter filter, Page page);
 }

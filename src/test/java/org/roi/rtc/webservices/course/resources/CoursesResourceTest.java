@@ -12,6 +12,7 @@ import org.roi.rtc.webservices.course.entities.Author;
 import org.roi.rtc.webservices.course.entities.CourseType;
 import org.roi.rtc.webservices.course.entities.Courses;
 import org.roi.rtc.webservices.course.model.CourseFilter;
+import org.roi.rtc.webservices.course.model.Page;
 
 import javax.ws.rs.core.MediaType;
 import java.util.Arrays;
@@ -111,7 +112,7 @@ public class CoursesResourceTest extends ResourceTest {
     @Test
     public void testFiltering() throws Exception {
         Collection<Courses> courses = Arrays.asList(course);
-        when(mockDao.findByFilter(any(CourseFilter.class))).thenReturn(courses);
+        when(mockDao.findByFilter(any(CourseFilter.class), any(Page.class))).thenReturn(courses);
         String result = client().resource("/courses/filter")
                 .queryParam("name", "1")
                 .queryParam("date", "11-01-1993")

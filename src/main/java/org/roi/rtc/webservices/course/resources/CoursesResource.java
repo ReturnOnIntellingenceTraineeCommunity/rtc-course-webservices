@@ -73,13 +73,6 @@ public class CoursesResource {
         return coursesDao.findAll();
     }
 
-    @GET
-    @Path("test")
-    @UnitOfWork
-    public Tags test() {
-       return tagsDao.findByValue("Java");
-    }
-
     /**
      * Update keys in assosiated entity
      *
@@ -87,10 +80,12 @@ public class CoursesResource {
      */
     private void updateKeys(final Courses course) {
         final Collection<Tags> tags = course.getTags();
-        for (final Tags tag : tags) {
-            final Tags oldTag = tagsDao.findByValue(tag.getValue());
-            if (oldTag != null) {
-                tag.setId(oldTag.getId());
+        if (tags != null) {
+            for (final Tags tag : tags) {
+                final Tags oldTag = tagsDao.findByValue(tag.getValue());
+                if (oldTag != null) {
+                    tag.setId(oldTag.getId());
+                }
             }
         }
         final Author author = course.getAuthor();
@@ -122,7 +117,7 @@ public class CoursesResource {
     /**
      * Update existing course
      *
-     * @param code      course code
+     * @param code   course code
      * @param course course for update
      * @return updated course
      */
@@ -169,11 +164,11 @@ public class CoursesResource {
      * Query params such as category and tags is array and items to be separated ";" delim
      * Query params such as date by the following rule: dd-MM-yyyy
      *
-     * @param name title for search
-     * @param date start date
+     * @param name       title for search
+     * @param date       start date
      * @param categories categories array
-     * @param tags tags array
-     * @param maxResult courses count per page (started on 0)
+     * @param tags       tags array
+     * @param maxResult  courses count per page (started on 0)
      * @param pageNumber current page (started on 0)
      * @return courses collection
      */

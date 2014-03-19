@@ -13,7 +13,8 @@ public class Page {
     }
 
     public Page(int firstResult, int maxResult) {
-        initialize(firstResult, maxResult);
+        this.firstResult = firstResult;
+        this.maxResult = maxResult;
     }
 
     public Page(Builder builder) {

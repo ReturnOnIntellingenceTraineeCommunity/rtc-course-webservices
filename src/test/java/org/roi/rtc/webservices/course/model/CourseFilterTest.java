@@ -1,5 +1,6 @@
 package org.roi.rtc.webservices.course.model;
 
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,6 +12,7 @@ import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 /**
  * @author Vladislav Pikus
@@ -99,5 +101,33 @@ public class CourseFilterTest {
     @Test
     public void testToString() throws Exception {
         assertNotNull(filter.toString());
+    }
+
+    @Test
+    public void testTestDefConstr() throws Exception {
+        filter = new CourseFilter();
+        assertNull(filter.getStartDate());
+        assertNull(filter.getTitle());
+        assertNull(filter.getCategories());
+        assertNull(filter.getTitle());
+    }
+
+    @Test
+    public void testConstrWithParam() throws Exception {
+        Collection<String> tags = Arrays.asList("Java", "Spring", "Hibernate", "JPA", "New");
+        Collection<String> cat = Arrays.asList("Java", "Spring", "Hibernate", "JPA");
+        String title = "title";
+        Date date = DateTime.now().toDate();
+        filter = new CourseFilter(title, date, cat, tags);
+        assertEquals(title, filter.getTitle());
+        assertEquals(date, filter.getStartDate());
+        assertEquals(cat, filter.getCategories());
+        assertEquals(tags, filter.getTags());
+    }
+
+    @Test
+    public void testDateBuildError() throws Exception {
+        filter = new CourseFilter.Builder().startDate("1111").build();
+        assertNull(filter.getStartDate());
     }
 }

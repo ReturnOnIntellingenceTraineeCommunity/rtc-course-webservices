@@ -15,23 +15,22 @@ import org.roi.rtc.webservices.course.dao.impl.TagsDaoImpl;
 import org.roi.rtc.webservices.course.entities.Author;
 import org.roi.rtc.webservices.course.entities.CourseType;
 import org.roi.rtc.webservices.course.entities.Courses;
+import org.roi.rtc.webservices.course.entities.Tags;
 import org.roi.rtc.webservices.course.model.CourseFilter;
 import org.roi.rtc.webservices.course.model.Page;
 
 import javax.ws.rs.core.MediaType;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import static com.yammer.dropwizard.testing.JsonHelpers.asJson;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Vladislav Pikus
@@ -44,7 +43,8 @@ public class CoursesResourceTest extends ResourceTest {
     private TagsDao mockTagsDao;
     private Date start;
     private Date end;
-    String code = "sdjasd982-sdasd-2323";
+    private String code = "sdjasd982-sdasd-2323";
+    private Author author;
 
     @Override
     protected void setUpResources() throws Exception {
@@ -58,7 +58,8 @@ public class CoursesResourceTest extends ResourceTest {
     public void setUp() throws Exception {
         start = DateTime.now().toDate();
         end = DateTime.now().toDate();
-        course = new Courses("codeTest", "nameTest", CourseType.DEV, new Author("Vasya", "Pupkin", "vasia@gmail.com"), start, end);
+        author = new Author("Vasya", "Pupkin", "vasia@gmail.com");
+        course = new Courses("codeTest", "nameTest", CourseType.DEV, author, start, end);
         course.setId(1);
     }
 
@@ -67,12 +68,12 @@ public class CoursesResourceTest extends ResourceTest {
         this.tearDownJersey();
     }
 
-    /*@Test
+    @Test
     public void testFindById() throws Exception {
         when(mockCoursesDao.findByCode(code)).thenReturn(course);
-        Courses actual = client().resource("/courses/" + code).get(Courses.class);
-        assertEquals(course, actual);
-    }*/
+        String actual = client().resource("/courses/" + code).get(String.class);
+        assertEquals(asJson(course), actual);
+    }
 
     @Test(expected = UniformInterfaceException.class)
     public void testFindByIdNull() {
@@ -91,20 +92,29 @@ public class CoursesResourceTest extends ResourceTest {
 
     @Test
     public void testCreate() throws Exception {
-        when(mockCoursesDao.create(course)).thenReturn(course);
+        when(mockCoursesDao.merge(any(Courses.class))).thenReturn(course);
+        when(mockAuthorDao.findByEmail("vasia@gmail.com")).thenReturn(author);
         when(mockCoursesDao.exist(anyString())).thenReturn(false);
-        /*Courses actual = client().resource("/courses").type(MediaType.APPLICATION_JSON).post(Courses.class, course);
+        Courses actual = client().resource("/courses").type(MediaType.APPLICATION_JSON).post(Courses.class, course);
         course.setCode(actual.getCode());
-        assertEquals(actual, course);
-        verify(mockCoursesDao).create(course);*/
+        assertEquals(asJson(actual), asJson(course));
+        verify(mockCoursesDao).merge(any(Courses.class));
     }
 
     @Test
     public void testUpdate() throws Exception {
-        //when(mockCoursesDao.update(course)).thenReturn(course);
-        //Courses actual = client().resource("/courses/"+code).type(MediaType.APPLICATION_JSON).put(Courses.class, course);
-        //assertEquals(actual, course);
-        //verify(mockCoursesDao).update(course);
+        course.setCode(code);
+        when(mockCoursesDao.findByCode(code)).thenReturn(course);
+        when(mockCoursesDao.merge(course)).thenReturn(course);
+        when(mockAuthorDao.findByEmail("vasia@gmail.com")).thenReturn(author);
+        List<Tags> tags = Arrays.asList(new Tags("Java"), new Tags("Hibernate"));
+        for (Tags tag : tags) {
+            when(mockTagsDao.findByValue(tag.getValue())).thenReturn(tag);
+        }
+        course.setTags(tags);
+        Courses actual = client().resource("/courses/" + code).type(MediaType.APPLICATION_JSON).put(Courses.class, course);
+        assertEquals(asJson(actual), asJson(course));
+        verify(mockCoursesDao).merge(course);
     }
 
     @Test
@@ -130,5 +140,14 @@ public class CoursesResourceTest extends ResourceTest {
                 .queryParam("tags", "1")
                 .type(MediaType.APPLICATION_JSON).get(String.class);
         assertEquals(result, asJson(courses));
+    }
+
+    @Test
+    public void testGetCount() throws Exception {
+        Integer expected = 100;
+        when(mockCoursesDao.getCount()).thenReturn(expected);
+        Integer actual = client().resource("/courses/count").get(Integer.class);
+        assertEquals(expected, actual);
+
     }
 }

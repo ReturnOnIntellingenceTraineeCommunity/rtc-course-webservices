@@ -6,6 +6,8 @@ import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
 import com.yammer.dropwizard.db.DatabaseConfiguration;
 import com.yammer.dropwizard.hibernate.HibernateBundle;
+import com.yammer.dropwizard.hibernate.SessionFactoryHealthCheck;
+import org.hibernate.SessionFactory;
 import org.roi.rtc.webservices.course.config.MainServiceConfiguration;
 import org.roi.rtc.webservices.course.dao.AuthorDao;
 import org.roi.rtc.webservices.course.dao.CoursesDao;
@@ -44,16 +46,17 @@ public class MainService extends Service<MainServiceConfiguration> {
 
     @Override
     public void run(MainServiceConfiguration conf, Environment env) throws Exception {
-        final AuthorDao authorDao = new AuthorDaoImpl(hibernate.getSessionFactory());
+        final SessionFactory sessionFactory = hibernate.getSessionFactory();
+        env.addHealthCheck(new SessionFactoryHealthCheck("mySql", sessionFactory, conf.getDatabase().getValidationQuery()));
+        final AuthorDao authorDao = new AuthorDaoImpl(sessionFactory);
         env.addResource(new AuthorResource(authorDao));
 
         final TagsDao tagsDao = new TagsDaoImpl(hibernate.getSessionFactory());
         env.addResource(new TagsResource(tagsDao));
 
         final CoursesDao coursesDao = new CoursesDaoImpl(hibernate.getSessionFactory());
-        env.addResource(new CoursesResource(coursesDao));
+        env.addResource(new CoursesResource(coursesDao, authorDao, tagsDao));
 
-        env.addResource(new HelloResource(conf.getMessages()));
         env.addResource(new CourseTypeResource());
     }
 }

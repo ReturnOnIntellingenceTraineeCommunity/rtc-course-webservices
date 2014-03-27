@@ -5,6 +5,7 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.roi.rtc.webservices.course.dao.AuthorDao;
 import org.roi.rtc.webservices.course.entities.Author;
 
@@ -22,7 +23,7 @@ public class AuthorDaoImpl extends AbstractDAO<Author> implements AuthorDao {
     }
 
     /**
-     * @see AuthorDao
+     * @see AuthorDao#create(Author)
      */
     @Override
     public Author create(Author author) {
@@ -31,7 +32,7 @@ public class AuthorDaoImpl extends AbstractDAO<Author> implements AuthorDao {
     }
 
     /**
-     * @see AuthorDao
+     * @see AuthorDao#update(Author)
      */
     @Override
     public Author update(Author author) {
@@ -40,7 +41,7 @@ public class AuthorDaoImpl extends AbstractDAO<Author> implements AuthorDao {
     }
 
     /**
-     * @see AuthorDao
+     * @see AuthorDao#delete(Integer)
      */
     @Override
     public void delete(Integer id) {
@@ -51,7 +52,7 @@ public class AuthorDaoImpl extends AbstractDAO<Author> implements AuthorDao {
     }
 
     /**
-     * @see AuthorDao
+     * @see AuthorDao#getCount()
      */
     @Override
     public Integer getCount() {
@@ -60,7 +61,7 @@ public class AuthorDaoImpl extends AbstractDAO<Author> implements AuthorDao {
     }
 
     /**
-     * @see AuthorDao
+     * @see AuthorDao#findAll()
      */
     @Override
     public Collection<Author> findAll() {
@@ -69,7 +70,7 @@ public class AuthorDaoImpl extends AbstractDAO<Author> implements AuthorDao {
     }
 
     /**
-     * @see AuthorDao
+     * @see AuthorDao#findById(Integer)
      */
     @Override
     public Author findById(Integer id) {
@@ -77,10 +78,19 @@ public class AuthorDaoImpl extends AbstractDAO<Author> implements AuthorDao {
     }
 
     /**
-     * @see AuthorDao
+     * @see AuthorDao#deleteAll()
      */
     @Override
     public void deleteAll() {
         currentSession().createQuery("delete from Author");
+    }
+
+    /**
+     * @see AuthorDao#findByEmail(String)
+     */
+    @Override
+    public Author findByEmail(String email) {
+        return (Author) currentSession().createCriteria(Author.class).add(Restrictions.eq("email", email))
+                .uniqueResult();
     }
 }

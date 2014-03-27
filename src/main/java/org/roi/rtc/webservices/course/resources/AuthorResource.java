@@ -88,6 +88,10 @@ public class AuthorResource {
     @UnitOfWork
     @Path("{id}")
     public Author update(@PathParam("id") IntParam id, Author author) {
+        Author oldAuthor = dao.findById(id.get());
+        if (oldAuthor != null) {
+            author.setId(oldAuthor.getId());
+        }
         checkArgument(id.get().equals(author.getId()));
         return dao.update(author);
     }

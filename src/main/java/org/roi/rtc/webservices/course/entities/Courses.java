@@ -1,10 +1,12 @@
 package org.roi.rtc.webservices.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +19,9 @@ import java.util.List;
  */
 @Entity
 @Table(name = "courses_db",uniqueConstraints = @UniqueConstraint(columnNames="code"))
+@XmlRootElement
 public class Courses implements Serializable {
+    @JsonIgnore
     private Integer id;
 
     @NotEmpty

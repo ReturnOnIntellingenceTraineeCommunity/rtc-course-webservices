@@ -61,4 +61,12 @@ public interface AuthorDao {
      * @return author
      */
     Author findById(Integer id);
+
+    /**
+     * Find author object by email
+     *
+     * @param email email of the author
+     * @return author object
+     */
+    Author findByEmail(String email);
 }

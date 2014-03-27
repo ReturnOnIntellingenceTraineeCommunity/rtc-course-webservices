@@ -5,6 +5,7 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.roi.rtc.webservices.course.dao.TagsDao;
 import org.roi.rtc.webservices.course.entities.Tags;
 
@@ -27,7 +28,7 @@ public class TagsDaoImpl extends AbstractDAO<Tags> implements TagsDao {
     }
 
     /**
-     * @see TagsDao
+     * @see TagsDao#create(Tags)
      */
     @Override
     public Tags create(Tags tag) {
@@ -36,7 +37,7 @@ public class TagsDaoImpl extends AbstractDAO<Tags> implements TagsDao {
     }
 
     /**
-     * @see TagsDao
+     * @see TagsDao#update(Tags)
      */
     @Override
     public Tags update(Tags tag) {
@@ -45,7 +46,7 @@ public class TagsDaoImpl extends AbstractDAO<Tags> implements TagsDao {
     }
 
     /**
-     * @see TagsDao
+     * @see TagsDao#exist(Tags)
      */
     @Override
     public boolean exist(Tags tag) {
@@ -54,7 +55,7 @@ public class TagsDaoImpl extends AbstractDAO<Tags> implements TagsDao {
     }
 
     /**
-     * @see TagsDao
+     * @see TagsDao#delete(Integer)
      */
     @Override
     public void delete(Integer id) {
@@ -65,7 +66,7 @@ public class TagsDaoImpl extends AbstractDAO<Tags> implements TagsDao {
     }
 
     /**
-     * @see TagsDao
+     * @see TagsDao#deleteAll()
      */
     @Override
     public void deleteAll() {
@@ -73,7 +74,7 @@ public class TagsDaoImpl extends AbstractDAO<Tags> implements TagsDao {
     }
 
     /**
-     * @see TagsDao
+     * @see TagsDao#getCount()
      */
     @Override
     public Integer getCount() {
@@ -82,7 +83,7 @@ public class TagsDaoImpl extends AbstractDAO<Tags> implements TagsDao {
     }
 
     /**
-     * @see TagsDao
+     * @see TagsDao#findAll()
      */
     @Override
     public Collection<Tags> findAll() {
@@ -91,10 +92,19 @@ public class TagsDaoImpl extends AbstractDAO<Tags> implements TagsDao {
     }
 
     /**
-     * @see TagsDao
+     * @see TagsDao#findById(Integer)
      */
     @Override
     public Tags findById(Integer id) {
         return (Tags) currentSession().get(Tags.class, id);
+    }
+
+    /**
+     * @see TagsDao#findByValue(String)
+     */
+    @Override
+    public Tags findByValue(String value) {
+        return (Tags) currentSession().createCriteria(Tags.class).add(Restrictions.eq("value", value))
+                .uniqueResult();
     }
 }

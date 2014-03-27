@@ -39,9 +39,9 @@ public class AuthorResourceTest extends ResourceTest {
     @Test
     public void testFindById() throws Exception {
         when(mockDao.findById(1)).thenReturn(author);
-        Author actual = client().resource("/author/1").get(Author.class);
+        String actual = client().resource("/author/1").get(String.class);
 
-        assertEquals(author, actual);
+        assertEquals(asJson(author), actual);
 
     }
 
@@ -62,6 +62,7 @@ public class AuthorResourceTest extends ResourceTest {
 
     @Test
     public void testCreate() throws Exception {
+        author.setId(null);
         when(mockDao.create(author)).thenReturn(author);
         Author actual = client().resource("/author").type(MediaType.APPLICATION_JSON).post(Author.class, author);
         assertEquals(actual, author);
@@ -71,8 +72,9 @@ public class AuthorResourceTest extends ResourceTest {
     @Test
     public void testUpdate() throws Exception {
         when(mockDao.update(author)).thenReturn(author);
+        when(mockDao.findById(1)).thenReturn(author);
         Author actual = client().resource("/author/1").type(MediaType.APPLICATION_JSON).put(Author.class, author);
-        assertEquals(actual, author);
+        assertEquals(asJson(actual), asJson(author));
         verify(mockDao).update(author);
     }
 

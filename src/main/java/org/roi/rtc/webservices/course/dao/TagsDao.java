@@ -68,4 +68,12 @@ public interface TagsDao {
      * @return tag
      */
     Tags findById(Integer id);
+
+    /**
+     * Find tags object by value
+     *
+     * @param value value of the tags
+     * @return tags object
+     */
+    Tags findByValue(String value);
 }

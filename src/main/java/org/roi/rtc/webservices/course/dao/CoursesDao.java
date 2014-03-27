@@ -1,6 +1,8 @@
 package org.roi.rtc.webservices.course.dao;
 
 import org.roi.rtc.webservices.course.entities.Courses;
+import org.roi.rtc.webservices.course.model.CourseFilter;
+import org.roi.rtc.webservices.course.model.Page;
 
 import java.util.Collection;
 
@@ -69,4 +71,37 @@ public interface CoursesDao {
      * @return course
      */
     Courses findById(Integer id);
+
+    /**
+     * Find collection of courses by filter parameters. Such as (title, category, tags, startDate)
+     * And find with pagination criteria
+     *
+     * @param filter filter object
+     * @param page page object
+     * @return collection of courses
+     */
+    Collection<Courses> findByFilter(CourseFilter filter, Page page);
+
+    /**
+     * Find course object by code
+     *
+     * @param code course code
+     * @return course object
+     */
+    Courses findByCode(String code);
+
+    /**
+     * Delete course by code
+     *
+     * @param code course code
+     */
+    void delete(String code);
+
+    /**
+     * SaveOrUpdate with merge associated entities
+     *
+     * @param course course object
+     * @return course object with updated keys
+     */
+    Courses merge(Courses course);
 }

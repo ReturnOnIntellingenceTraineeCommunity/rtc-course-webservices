@@ -87,6 +87,10 @@ public class TagsResource {
     @UnitOfWork
     @Path("{id}")
     public Tags update(@PathParam("id") IntParam id, Tags tag) {
+        Tags oldTag = dao.findById(id.get());
+        if (oldTag != null) {
+            tag.setId(oldTag.getId());
+        }
         checkArgument(id.get().equals(tag.getId()));
         return dao.update(tag);
     }

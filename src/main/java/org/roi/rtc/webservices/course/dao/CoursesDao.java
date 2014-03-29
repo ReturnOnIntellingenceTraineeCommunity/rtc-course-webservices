@@ -104,4 +104,13 @@ public interface CoursesDao {
      * @return course object with updated keys
      */
     Courses merge(Courses course);
+
+    /**
+     * Find total course count by filter parameters. Such as (title, category, tags, startDate)
+     * And find with pagination criteria
+     *
+     * @param filter filter object
+     * @return total course count
+     */
+    Integer getCount(CourseFilter filter);
 }

@@ -102,10 +102,11 @@ public class CoursesDaoImpl extends AbstractDAO<Courses> implements CoursesDao {
     }
 
     /**
-     * @see CoursesDao#findByFilter(CourseFilter, Page)
+     * Build search criteria by filter
+     * @param filter filter course search
+     * @return criteria
      */
-    @Override
-    public Collection<Courses> findByFilter(CourseFilter filter, Page page) {
+    private Criteria buildCriteria(CourseFilter filter) {
         Criteria criteria = currentSession().createCriteria(Courses.class);
         criteria.setFetchMode("tags", FetchMode.SELECT);
         criteria.setFetchMode("author", FetchMode.SELECT);
@@ -134,8 +135,25 @@ public class CoursesDaoImpl extends AbstractDAO<Courses> implements CoursesDao {
             }
             criteria.add(tagDis);
         }
-        return criteria.addOrder(Order.asc("id")).setFirstResult(page.getFirstResult())
+
+        return criteria;
+    }
+
+    /**
+     * @see CoursesDao#findByFilter(CourseFilter, Page)
+     */
+    @Override
+    public Collection<Courses> findByFilter(CourseFilter filter, Page page) {
+        return buildCriteria(filter).addOrder(Order.asc("id")).setFirstResult(page.getFirstResult())
                 .setMaxResults(page.getMaxResult()).list();
+    }
+
+    /**
+     * @see CoursesDao#getCount(CourseFilter)
+     */
+    @Override
+    public Integer getCount(CourseFilter filter) {
+        return ((Long)buildCriteria(filter).setProjection(Projections.rowCount()).uniqueResult()).intValue();
     }
 
     /**

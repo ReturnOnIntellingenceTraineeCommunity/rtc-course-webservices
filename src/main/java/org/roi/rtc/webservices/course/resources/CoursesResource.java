@@ -8,6 +8,7 @@ import org.roi.rtc.webservices.course.entities.Author;
 import org.roi.rtc.webservices.course.entities.Courses;
 import org.roi.rtc.webservices.course.entities.Tags;
 import org.roi.rtc.webservices.course.model.CourseFilter;
+import org.roi.rtc.webservices.course.model.CoursesDTO;
 import org.roi.rtc.webservices.course.model.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,17 +61,6 @@ public class CoursesResource {
             throw ex;
         }
         return courses;
-    }
-
-    /**
-     * Find collection of courses
-     *
-     * @return collection of courses
-     */
-    @GET
-    @UnitOfWork
-    public Collection<Courses> findAll() {
-        return coursesDao.findAll();
     }
 
     /**
@@ -170,12 +160,11 @@ public class CoursesResource {
      * @param tags       tags array
      * @param maxResult  courses count per page (started on 0)
      * @param pageNumber current page (started on 0)
-     * @return courses collection
+     * @return coursesDTO
      */
     @GET
-    @Path("filter")
     @UnitOfWork
-    public Collection<Courses> filtering(@QueryParam("name") String name,
+    public CoursesDTO filtering(@QueryParam("name") String name,
                                          @QueryParam("date") String date,
                                          @QueryParam("categories") String categories,
                                          @QueryParam("tags") String tags,
@@ -183,20 +172,13 @@ public class CoursesResource {
                                          @QueryParam("maxResult") int maxResult) {
         CourseFilter filter = new CourseFilter.Builder().title(name).startDate(date)
                 .categories(categories).tags(tags).build();
-        Page page = new Page.Builder(coursesDao.getCount()).page(pageNumber).maxResult(maxResult)
+        Integer total = coursesDao.getCount(filter);
+        Page page = new Page.Builder(total).page(pageNumber).maxResult(maxResult)
                 .build();
-        return coursesDao.findByFilter(filter, page);
-    }
-
-    /**
-     * Get courses count
-     *
-     * @return courses count
-     */
-    @GET
-    @Path("count")
-    @UnitOfWork
-    public Integer getCount() {
-        return coursesDao.getCount();
+        CoursesDTO dto = new CoursesDTO.Builder().courses(coursesDao.findByFilter(filter, page))
+                .totalCount(total)
+                .limit(page.getMaxResult())
+                .offset(page.getFirstResult()).build();
+        return dto;
     }
 }

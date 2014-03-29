@@ -17,6 +17,7 @@ import org.roi.rtc.webservices.course.entities.CourseType;
 import org.roi.rtc.webservices.course.entities.Courses;
 import org.roi.rtc.webservices.course.entities.Tags;
 import org.roi.rtc.webservices.course.model.CourseFilter;
+import org.roi.rtc.webservices.course.model.CoursesDTO;
 import org.roi.rtc.webservices.course.model.Page;
 
 import javax.ws.rs.core.MediaType;
@@ -83,14 +84,6 @@ public class CoursesResourceTest extends ResourceTest {
     }
 
     @Test
-    public void testFindAll() throws Exception {
-        Collection<Courses> expected = Arrays.asList(course);
-        when(mockCoursesDao.findAll()).thenReturn(expected);
-        String actual = client().resource("/courses").get(String.class);
-        assertEquals(asJson(expected), actual);
-    }
-
-    @Test
     public void testCreate() throws Exception {
         when(mockCoursesDao.merge(any(Courses.class))).thenReturn(course);
         when(mockAuthorDao.findByEmail("vasia@gmail.com")).thenReturn(author);
@@ -133,21 +126,17 @@ public class CoursesResourceTest extends ResourceTest {
     public void testFiltering() throws Exception {
         Collection<Courses> courses = Arrays.asList(course);
         when(mockCoursesDao.findByFilter(any(CourseFilter.class), any(Page.class))).thenReturn(courses);
-        String result = client().resource("/courses/filter")
+        when(mockCoursesDao.getCount(any(CourseFilter.class))).thenReturn(1);
+        String result = client().resource("/courses")
                 .queryParam("name", "1")
                 .queryParam("date", "11-01-1993")
                 .queryParam("categories", "1;2")
                 .queryParam("tags", "1")
                 .type(MediaType.APPLICATION_JSON).get(String.class);
-        assertEquals(result, asJson(courses));
-    }
-
-    @Test
-    public void testGetCount() throws Exception {
-        Integer expected = 100;
-        when(mockCoursesDao.getCount()).thenReturn(expected);
-        Integer actual = client().resource("/courses/count").get(Integer.class);
-        assertEquals(expected, actual);
-
+        CoursesDTO dto = new CoursesDTO.Builder().courses(courses)
+                .totalCount(1)
+                .limit(0)
+                .offset(0).build();
+        assertEquals(result, asJson(dto));
     }
 }

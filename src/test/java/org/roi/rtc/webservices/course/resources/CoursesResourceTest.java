@@ -5,6 +5,7 @@ import com.yammer.dropwizard.testing.ResourceTest;
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.roi.rtc.webservices.course.dao.AuthorDao;
 import org.roi.rtc.webservices.course.dao.CoursesDao;
@@ -36,6 +37,7 @@ import static org.mockito.Mockito.*;
 /**
  * @author Vladislav Pikus
  */
+@Ignore
 public class CoursesResourceTest extends ResourceTest {
 
     private Courses course;

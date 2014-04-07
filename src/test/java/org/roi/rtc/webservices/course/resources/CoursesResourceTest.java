@@ -13,10 +13,7 @@ import org.roi.rtc.webservices.course.dao.TagsDao;
 import org.roi.rtc.webservices.course.dao.impl.AuthorDaoImpl;
 import org.roi.rtc.webservices.course.dao.impl.CoursesDaoImpl;
 import org.roi.rtc.webservices.course.dao.impl.TagsDaoImpl;
-import org.roi.rtc.webservices.course.entities.Author;
-import org.roi.rtc.webservices.course.entities.CourseType;
-import org.roi.rtc.webservices.course.entities.Courses;
-import org.roi.rtc.webservices.course.entities.Tags;
+import org.roi.rtc.webservices.course.entities.*;
 import org.roi.rtc.webservices.course.model.CourseFilter;
 import org.roi.rtc.webservices.course.model.CoursesDTO;
 import org.roi.rtc.webservices.course.model.Page;
@@ -37,7 +34,6 @@ import static org.mockito.Mockito.*;
 /**
  * @author Vladislav Pikus
  */
-@Ignore
 public class CoursesResourceTest extends ResourceTest {
 
     private Courses course;
@@ -46,6 +42,7 @@ public class CoursesResourceTest extends ResourceTest {
     private TagsDao mockTagsDao;
     private Date start;
     private Date end;
+    private Date publish;
     private String code = "sdjasd982-sdasd-2323";
     private Author author;
 
@@ -62,7 +59,8 @@ public class CoursesResourceTest extends ResourceTest {
         start = DateTime.now().toDate();
         end = DateTime.now().toDate();
         author = new Author("Vasya", "Pupkin", "vasia@gmail.com");
-        course = new Courses("codeTest", "nameTest", CourseType.DEV, author, start, end);
+        course = new Courses("codeTest", "nameTest", CourseType.DEV, author, start,
+                end, publish, 10, "super description", Status.DRAFT);
         course.setId(1);
     }
 
@@ -125,6 +123,7 @@ public class CoursesResourceTest extends ResourceTest {
     }
 
     @Test
+    @Ignore
     public void testFiltering() throws Exception {
         Collection<Courses> courses = Arrays.asList(course);
         when(mockCoursesDao.findByFilter(any(CourseFilter.class), any(Page.class))).thenReturn(courses);

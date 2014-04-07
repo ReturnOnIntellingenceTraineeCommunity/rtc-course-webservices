@@ -2,7 +2,6 @@ package org.roi.rtc.webservices.course.model;
 
 import org.joda.time.DateTime;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.text.ParseException;
@@ -11,14 +10,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 /**
  * @author Vladislav Pikus
  */
-@Ignore
 public class CourseFilterTest {
     private CourseFilter filter;
 

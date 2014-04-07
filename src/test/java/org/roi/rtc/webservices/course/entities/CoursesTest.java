@@ -19,10 +19,12 @@ public class CoursesTest {
 
     private Date start = DateTime.now().toDate();
     private Date end = DateTime.now().toDate();
+    private Date publish = DateTime.now().toDate();
 
     @Before
     public void setUp() {
-        courses = new Courses("codeTest", "nameTest", CourseType.DEV, new Author("Vasya", "Pupkin", "vasia@gmail.com"), start, end);
+        courses = new Courses("codeTest", "nameTest", CourseType.DEV, new Author("Vasya", "Pupkin", "vasia@gmail.com"),
+                start, end, publish, 10, "super description", Status.DRAFT);
     }
 
     @Test
@@ -111,7 +113,8 @@ public class CoursesTest {
         tmp = courses;
         assertTrue(tmp.equals(courses));
         assertFalse(courses.equals(new Integer(1)));
-        tmp = new Courses("codeTest", "nameTest", CourseType.DEV, new Author("Vasya", "Pupkin", "vasia@gmail.com"), start, end);
+        tmp = new Courses("codeTest", "nameTest", CourseType.DEV, new Author("Vasya", "Pupkin", "vasia@gmail.com"),
+                start, end, publish, 10, "super description", Status.DRAFT);
         assertTrue(courses.equals(tmp));
         tmp = new Courses();
         assertFalse(courses.equals(tmp));
@@ -159,6 +162,21 @@ public class CoursesTest {
         Date expected = DateTime.now().toDate();
         courses.setEndDate(expected);
         Date actual = courses.getEndDate();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testGetPublishDate() throws Exception {
+        Date expected = publish;
+        Date actual = courses.getPublishDate();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testSetPublishDate() throws Exception {
+        Date expected = DateTime.now().toDate();
+        courses.setPublishDate(expected);
+        Date actual = courses.getPublishDate();
         assertEquals(expected, actual);
     }
 }

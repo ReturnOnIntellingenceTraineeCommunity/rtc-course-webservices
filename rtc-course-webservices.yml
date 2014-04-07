@@ -6,8 +6,8 @@ http:
   adminPort: 8179
 database:
   driverClass: com.mysql.jdbc.Driver
-  user: root
-  password: 1111
+  user: courses
+  password: hLvKfxEX5sTaEUzu
   url: jdbc:mysql://localhost/courses?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
   validationQuery: "/* MyService Health Check */ SELECT 1"
   properties:

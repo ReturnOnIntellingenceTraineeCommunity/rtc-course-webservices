@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * Course entity
+
  *
  * @author Eugene Lapshin
  * @author Vladislav Pikus
@@ -28,7 +29,7 @@ public class Courses implements Serializable {
     private String code;
 
     @NotEmpty
-    @Size(min = 2, max = 30)
+    @Size(min = 2, max = 50)
     private String name;
 
     @NotNull
@@ -43,7 +44,21 @@ public class Courses implements Serializable {
     @NotNull
     private Date endDate;
 
+    @NotNull
+    private Date publishDate;
+
     private List<Tags> tags;
+
+    @NotNull
+    @Size(min = 1)
+    private Integer capacity;
+
+    @NotNull
+    @Size(max = 255)
+    private String description;
+
+    @NotNull
+    private Status status;
 
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(name="courses_tags",
@@ -125,17 +140,44 @@ public class Courses implements Serializable {
         this.id = id;
     }
 
+    @Column
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getPublishDate() { return publishDate; }
+
+    public void setPublishDate(Date publishDate) { this.publishDate = publishDate; }
+
+    @Column
+    public Integer getCapacity() { return capacity;}
+
+    public void setCapacity(Integer capacity) { this.capacity = capacity; }
+
+    @Column(length = 255)
+    public String getDescription() { return description; }
+
+    public void setDescription(String description) { this.description = description; }
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    public Status getStatus() { return status; }
+
+    public void setStatus(Status status) { this.status = status; }
+
     public Courses() {
 
     }
 
-    public Courses(String code, String name, CourseType type, Author author, Date startDate, Date endDate) {
+    public Courses(String code, String name, CourseType type, Author author, Date startDate,
+                   Date endDate, Date publishDate, Integer capacity, String description, Status status) {
         this.code = code;
         this.name = name;
         this.type = type;
         this.author = author;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.publishDate = publishDate;
+        this.capacity = capacity;
+        this.description = description;
+        this.status = status;
     }
 
     @Override
@@ -151,7 +193,11 @@ public class Courses implements Serializable {
         if (id != null ? !id.equals(courses.id) : courses.id != null) return false;
         if (name != null ? !name.equals(courses.name) : courses.name != null) return false;
         if (startDate != null ? !startDate.equals(courses.startDate) : courses.startDate != null) return false;
+        if (publishDate != null ? !publishDate.equals(courses.publishDate) : courses.publishDate != null) return false;
         if (tags != null ? !tags.equals(courses.tags) : courses.tags != null) return false;
+        if (description != null ? !description.equals(courses.description) : courses.description != null) return false;
+        if (capacity != null ? !capacity.equals(courses.capacity) : courses.capacity != null) return false;
+        if (status != courses.status) return false;
         if (type != courses.type) return false;
 
         return true;
@@ -167,6 +213,10 @@ public class Courses implements Serializable {
         result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
         result = 31 * result + (tags != null ? tags.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (publishDate != null ? publishDate.hashCode() : 0);
+        result = 31 * result + (capacity != null ? capacity.hashCode() : 0);
         return result;
     }
 
@@ -178,10 +228,16 @@ public class Courses implements Serializable {
         sb.append(", name='").append(name).append('\'');
         sb.append(", type=").append(type);
         sb.append(", author=").append(author);
+        sb.append(", capacity=").append(capacity);
         sb.append(", startDate=").append(startDate);
         sb.append(", endDate=").append(endDate);
+        sb.append(", publishDate=").append(publishDate);
         sb.append(", tags=").append(tags);
+        sb.append(", description=").append(description);
+        sb.append(", status=").append(status);
         sb.append('}');
         return sb.toString();
     }
+
+
 }

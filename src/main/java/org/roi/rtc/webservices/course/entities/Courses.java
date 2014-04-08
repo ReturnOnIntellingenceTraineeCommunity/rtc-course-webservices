@@ -44,21 +44,15 @@ public class Courses implements Serializable {
     @NotNull
     private Date endDate;
 
-    @NotNull
     private Date publishDate;
 
     private List<Tags> tags;
 
-    @NotNull
-    @Size(min = 1)
     private Integer capacity;
 
-    @NotNull
-    @Size(max = 255)
     private String description;
 
-    @NotNull
-    private Status status;
+    private Status status = Status.DRAFT;
 
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(name="courses_tags",
@@ -157,7 +151,7 @@ public class Courses implements Serializable {
     public void setDescription(String description) { this.description = description; }
 
     @Column
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     public Status getStatus() { return status; }
 
     public void setStatus(Status status) { this.status = status; }

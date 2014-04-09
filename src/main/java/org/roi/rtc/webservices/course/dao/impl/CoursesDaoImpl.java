@@ -11,6 +11,7 @@ import org.hibernate.criterion.Restrictions;
 import org.roi.rtc.webservices.course.dao.CoursesDao;
 import org.roi.rtc.webservices.course.entities.CourseType;
 import org.roi.rtc.webservices.course.entities.Courses;
+import org.roi.rtc.webservices.course.entities.Status;
 import org.roi.rtc.webservices.course.model.CourseFilter;
 import org.roi.rtc.webservices.course.model.Page;
 
@@ -113,6 +114,12 @@ public class CoursesDaoImpl extends AbstractDAO<Courses> implements CoursesDao {
         final String title = filter.getTitle();
         if (title != null && !title.equals("")) {
             criteria.add(Restrictions.like("name", "%" + title + "%"));
+        }
+        final String status = filter.getStatus();
+        if (status != null && !status.equals("")) {
+            final Disjunction stat = Restrictions.disjunction();
+            stat.add(Restrictions.eq("status", Status.valueOf(status.toUpperCase())));
+            criteria.add(stat);
         }
         final Date startDate = filter.getStartDate();
         if (startDate != null) {

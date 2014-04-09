@@ -168,10 +168,11 @@ public class CoursesResource {
                                          @QueryParam("date") String date,
                                          @QueryParam("categories") String categories,
                                          @QueryParam("tags") String tags,
+                                         @QueryParam("status") String status,
                                          @QueryParam("pageNumber") int pageNumber,
                                          @QueryParam("maxResult") int maxResult) {
         CourseFilter filter = new CourseFilter.Builder().title(name).startDate(date)
-                .categories(categories).tags(tags).build();
+                .categories(categories).tags(tags).status(status).build();
         Integer total = coursesDao.getCount(filter);
         Page page = new Page.Builder(total).page(pageNumber).maxResult(maxResult)
                 .build();

@@ -115,8 +115,9 @@ public class CourseFilterTest {
         Collection<String> tags = Arrays.asList("Java", "Spring", "Hibernate", "JPA", "New");
         Collection<String> cat = Arrays.asList("Java", "Spring", "Hibernate", "JPA");
         String title = "title";
+        String status = "DRAFT";
         Date date = DateTime.now().toDate();
-        filter = new CourseFilter(title, date, cat, tags);
+        filter = new CourseFilter(title, date, cat, tags, status);
         assertEquals(title, filter.getTitle());
         assertEquals(date, filter.getStartDate());
         assertEquals(cat, filter.getCategories());

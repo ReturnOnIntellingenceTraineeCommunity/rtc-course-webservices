@@ -18,6 +18,7 @@ public class CourseFilter {
     private Date startDate;
     private Collection<String> categories;
     private Collection<String> tags;
+    private String status;
 
     public String getTitle() {
         return title;
@@ -51,15 +52,20 @@ public class CourseFilter {
         this.tags = tags;
     }
 
+    public String getStatus() { return status; }
+
+    public void setStatus(String status) { this.status = status; }
+
     public CourseFilter() {
 
     }
 
-    public CourseFilter(String title, Date startDate, Collection<String> categories, Collection<String> tags) {
+    public CourseFilter(String title, Date startDate, Collection<String> categories, Collection<String> tags, String status) {
         this.title = title;
         this.startDate = startDate;
         this.categories = categories;
         this.tags = tags;
+        this.status = status;
     }
 
     public CourseFilter(Builder builder) {
@@ -67,6 +73,7 @@ public class CourseFilter {
         startDate = builder.startDate;
         categories = builder.categories;
         tags = builder.tags;
+        status= builder.status;
     }
 
     /**
@@ -78,9 +85,15 @@ public class CourseFilter {
         private Date startDate;
         private Collection<String> categories = new ArrayList<String>();
         private Collection<String> tags = new ArrayList<String>();
+        private String status;
 
         public Builder title(String val) {
             title = val;
+            return this;
+        }
+
+        public Builder status(String val) {
+            status = val;
             return this;
         }
 
@@ -132,6 +145,7 @@ public class CourseFilter {
         sb.append(", startDate='").append(startDate).append('\'');
         sb.append(", categories=").append(categories);
         sb.append(", tags=").append(tags);
+        sb.append(", status='").append(status).append('\'');
         sb.append('}');
         return sb.toString();
     }

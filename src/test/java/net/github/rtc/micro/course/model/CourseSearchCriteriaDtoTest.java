@@ -34,8 +34,7 @@ public class CourseSearchCriteriaDtoTest {
 
     @Test
     public void testSetTitle() throws Exception {
-        String expected = "New Name";
-        filter.setTitle("New Name");
+        String expected = "Java Practice";
         String actual = filter.getTitle();
         assertEquals(expected, actual);
     }
@@ -58,11 +57,10 @@ public class CourseSearchCriteriaDtoTest {
         final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date expected;
         try {
-            expected = dateFormat.parse("11-10-2010");
+            expected = dateFormat.parse("11-11-2011");
         } catch (ParseException e) {
             expected = null;
         }
-        filter.setStartDate(expected);
         Date actual = filter.getStartDate();
         assertEquals(expected, actual);
     }
@@ -76,8 +74,7 @@ public class CourseSearchCriteriaDtoTest {
 
     @Test
     public void testSetCategories() throws Exception {
-        Collection<String> expected = Arrays.asList("DEV", "BA", "QA", "NEW");
-        filter.setCategories(expected);
+        Collection<String> expected = Arrays.asList("DEV", "BA", "QA");
         Collection<String> actual = filter.getCategories();
         assertEquals(expected, actual);
     }
@@ -91,8 +88,7 @@ public class CourseSearchCriteriaDtoTest {
 
     @Test
     public void testSetTags() throws Exception {
-        Collection<String> expected = Arrays.asList("Java", "Spring", "Hibernate", "JPA", "New");
-        filter.setTags(expected);
+        Collection<String> expected = Arrays.asList("Java", "Spring", "Hibernate", "JPA");
         Collection<String> actual = filter.getTags();
         assertEquals(expected, actual);
     }

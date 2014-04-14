@@ -2,21 +2,21 @@ package net.github.rtc.micro.course.resource;
 
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.yammer.dropwizard.testing.ResourceTest;
+import net.github.rtc.micro.course.dao.AuthorDao;
 import net.github.rtc.micro.course.dao.CourseDao;
+import net.github.rtc.micro.course.dao.TagDao;
+import net.github.rtc.micro.course.dao.impl.AuthorDaoImpl;
 import net.github.rtc.micro.course.dao.impl.CourseDaoImpl;
 import net.github.rtc.micro.course.dao.impl.TagDaoImpl;
+import net.github.rtc.micro.course.entities.*;
+import net.github.rtc.micro.course.model.CourseSearchResult;
 import net.github.rtc.micro.course.model.dto.CourseSearchCriteriaDto;
-import net.github.rtc.micro.course.model.dto.CourseSearchResult;
+import net.github.rtc.micro.course.model.dto.PageDto;
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import net.github.rtc.micro.course.dao.AuthorDao;
-import net.github.rtc.micro.course.dao.TagDao;
-import net.github.rtc.micro.course.dao.impl.AuthorDaoImpl;
-import net.github.rtc.micro.course.entities.*;
-import net.github.rtc.micro.course.model.dto.PageDto;
 
 import javax.ws.rs.core.MediaType;
 import java.util.Arrays;

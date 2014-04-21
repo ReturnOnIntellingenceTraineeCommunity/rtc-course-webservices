@@ -8,7 +8,7 @@ database:
   driverClass: com.mysql.jdbc.Driver
   user: course
   password: hLvKfxEX5sTaEUzu
-  url: jdbc:mysql://localhost/course?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
+  url: jdbc:mysql://localhost/courses?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
   validationQuery: "/* MyService Health Check */ SELECT 1"
   properties:
     hibernate.hbm2ddl.auto: update

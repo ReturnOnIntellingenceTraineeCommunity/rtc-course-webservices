@@ -31,3 +31,13 @@ logging:
     archivedFileCount: 50
     # The timezone used to format dates. HINT: USE THE DEFAULT, UTC.
     timeZone: UTC
+
+# Quartz Scheduler configuration
+quartzSettings:
+  instanceName: MyQuartzScheduler
+  threadPoolClass: org.quartz.simpl.SimpleThreadPool
+  threadCount: 5
+  threadPriority: 5
+  jobStoreClass: org.quartz.simpl.RAMJobStore
+  # A comma separated list of XML files
+  jobFiles: job.xml

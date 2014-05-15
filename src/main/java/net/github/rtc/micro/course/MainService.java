@@ -10,6 +10,8 @@ import com.yammer.dropwizard.hibernate.SessionFactoryHealthCheck;
 import net.github.rtc.micro.course.dao.CourseDao;
 import net.github.rtc.micro.course.dao.impl.TagDaoImpl;
 import net.github.rtc.micro.course.entities.Tag;
+import net.github.rtc.micro.course.jobs.QuartzManager;
+import net.github.rtc.micro.course.jobs.QuartzSchedulerHealthCheck;
 import org.hibernate.SessionFactory;
 import net.github.rtc.micro.course.config.MainServiceConfiguration;
 import net.github.rtc.micro.course.dao.AuthorDao;
@@ -19,6 +21,8 @@ import net.github.rtc.micro.course.dao.impl.CourseDaoImpl;
 import net.github.rtc.micro.course.entities.Author;
 import net.github.rtc.micro.course.entities.Course;
 import net.github.rtc.micro.course.resource.*;
+import org.quartz.SchedulerFactory;
+import org.quartz.impl.StdSchedulerFactory;
 
 /**
  * @author Vladislav Pikus
@@ -42,7 +46,7 @@ public class MainService extends Service<MainServiceConfiguration> {
         bootstrap.setName("rtc-course-webservices");
         bootstrap.addBundle(new AssetsBundle("/assets/", "/"));
         bootstrap.addBundle(hibernate);
-    }
+            }
 
     @Override
     public void run(MainServiceConfiguration conf, Environment env) throws Exception {
@@ -58,5 +62,10 @@ public class MainService extends Service<MainServiceConfiguration> {
         env.addResource(new CourseResource(courseDao, authorDao, tagDao));
 
         env.addResource(new CourseTypeResource());
+
+        SchedulerFactory sf = new StdSchedulerFactory(conf.getSchedulerFactoryProperties());
+        QuartzManager qm = new QuartzManager(sf); // A Dropwizard Managed Object
+        env.manage(qm); // Assign the management of the object to the Service
+        env.addHealthCheck(new QuartzSchedulerHealthCheck(qm));  // Add the health check to the service
     }
 }

@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<job-scheduling-data xmlns="http://www.quartz-scheduler.org/xml/JobSchedulingData"
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     xsi:schemaLocation="http://www.quartz-scheduler.org/xml/JobSchedulingData http://www.quartz-scheduler.org/xml/job_scheduling_data_2_0.xsd"
+                     version="2.0">
+
+    <schedule>
+        <job>
+            <name>MySimpleJob</name>
+            <group>DailyJobs</group>
+            <job-class>net.github.rtc.micro.course.jobs.Joba</job-class>
+            <job-data-map>
+                <entry>
+                    <key>someSetting</key>
+                    <value>someValue</value>
+                </entry>
+                <entry>
+                    <key>retryCount</key>
+                    <value>3</value>
+                </entry>
+                <entry>
+                    <key>retryDelaySeconds</key>
+                    <value>180</value>
+                </entry>
+            </job-data-map>
+        </job>
+        <trigger>
+            <cron>
+                <name>MySimpleTrigger</name>
+                <group>MyTriggerGroup</group>
+                <job-name>MySimpleJob</job-name>
+                <job-group>DailyJobs</job-group>
+                <!-- Every 2sec -->
+                <cron-expression>0/2 * * * * ?</cron-expression>
+            </cron>
+        </trigger>
+    </schedule>
+</job-scheduling-data>
